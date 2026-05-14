@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-primary: var(--color-primary);
+  --color-brand: var(--color-brand);
+  --color-light: var(--color-light);
+  --color-gold: var(--color-gold);
+  --color-surface: var(--color-surface);
+  --color-mint: var(--color-mint);
+  --color-sunset: var(--color-sunset);
+  --color-midnight: var(--color-midnight);
+}
+
+@layer base {
+  :root {
+    --color-primary: #0a0a0a;
+    --color-brand: #c5a059;
+    --color-light: #ffffff;
+    --color-gold: #c5a059;
+    --color-surface: #111111;
+    --color-mint: #d4af6e;
+    --color-sunset: #c5a059;
+    --color-midnight: #000000;
+  }
+
+  [data-theme="light"] {
+    --color-primary: #fcfcfc;
+    --color-brand: #a8813a;
+    --color-light: #0a0a0a;
+    --color-gold: #a8813a;
+    --color-surface: #f0f0f0;
+    --color-mint: #b08d4b;
+    --color-sunset: #a8813a;
+    --color-midnight: #ffffff;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+@keyframes ticker {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  z-index: 9999;
+  background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+}
