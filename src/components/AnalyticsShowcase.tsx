@@ -44,6 +44,7 @@ export function AnalyticsShowcase() {
           <div className="lg:col-span-1 flex flex-col gap-4">
             <button
               onClick={() => setActiveView("gdp")}
+              aria-pressed={activeView === "gdp"}
               className={`p-6 text-left rounded-xl border transition-all ${
                 activeView === "gdp"
                   ? "bg-brand/10 border-brand/50 text-light"
@@ -57,6 +58,7 @@ export function AnalyticsShowcase() {
             </button>
             <button
               onClick={() => setActiveView("sgcc")}
+              aria-pressed={activeView === "sgcc"}
               className={`p-6 text-left rounded-xl border transition-all ${
                 activeView === "sgcc"
                   ? "bg-brand/10 border-brand/50 text-light"

@@ -102,6 +102,7 @@ export function Nav() {
                     ? "text-brand"
                     : "text-light/70 hover:text-light",
                 )}
+                aria-current={activeSection === link ? "page" : undefined}
               >
                 {link}
                 {activeSection === link && (
@@ -116,6 +117,7 @@ export function Nav() {
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               className="p-2 text-light/70 hover:text-light transition-colors"
               aria-label="Toggle theme"
+              aria-pressed={theme === "light"}
             >
               {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
