@@ -229,7 +229,8 @@ export function Contact() {
                 <a
                   href="https://github.com/MadScie254"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub profile"
                   className="w-12 h-12 rounded-full bg-surface border border-light/10 flex flex-col items-center justify-center hover:bg-brand hover:border-brand hover:text-primary transition-all interactive group"
                 >
                   <Github className="w-5 h-5" />
@@ -237,7 +238,8 @@ export function Contact() {
                 <a
                   href="https://linkedin.com/in/daniel-wanjala-msc-912b8b17b/"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn profile"
                   className="w-12 h-12 rounded-full bg-surface border border-light/10 flex flex-col items-center justify-center hover:bg-brand hover:border-brand hover:text-primary transition-all interactive group"
                 >
                   <Linkedin className="w-5 h-5" />
@@ -245,7 +247,8 @@ export function Contact() {
                 <a
                   href="https://dev.to/wanjala"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="DEV.to profile"
                   className="h-12 px-5 rounded-full bg-surface border border-light/10 flex flex-col items-center justify-center hover:bg-brand hover:border-brand hover:text-primary transition-all interactive group font-bold text-sm"
                 >
                   DEV.to
@@ -253,7 +256,8 @@ export function Contact() {
                 <a
                   href="https://orcid.org/0009-0005-1979-8555"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="ORCID profile"
                   className="h-12 px-5 rounded-full bg-surface border border-light/10 flex flex-col items-center justify-center hover:bg-brand hover:border-brand hover:text-primary transition-all interactive group font-bold text-sm"
                 >
                   ORCID
