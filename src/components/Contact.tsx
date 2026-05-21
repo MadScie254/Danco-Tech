@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   ArrowRight,
   Mail,
@@ -10,57 +10,6 @@ import {
 } from "lucide-react";
 
 export function Contact() {
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
-    "idle",
-  );
-  const [message, setMessage] = useState("");
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setStatus("loading");
-    setMessage("");
-
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const payload = {
-      name: String(formData.get("name") ?? ""),
-      email: String(formData.get("email") ?? ""),
-      company: String(formData.get("company") ?? ""),
-      projectType: String(formData.get("project_type") ?? ""),
-      message: String(formData.get("message") ?? ""),
-      honeypot: String(formData.get("company_website") ?? ""),
-    };
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        if (response.status === 404) {
-          throw new Error(
-            "Contact form works after deployment. Please try again on the live site.",
-          );
-        }
-        const errorText = await response.text();
-        throw new Error(errorText || "Unable to send message.");
-      }
-
-      setStatus("success");
-      setMessage("Thanks! Your message has been sent.");
-      form.reset();
-    } catch (error) {
-      setStatus("error");
-      if (error instanceof Error && error.message) {
-        setMessage(error.message);
-      } else {
-        setMessage("Something went wrong. Please try again.");
-      }
-    }
-  };
-
   return (
     <section
       id="contact"
@@ -90,7 +39,8 @@ export function Contact() {
           {/* Form */}
           <div>
             <form
-              onSubmit={handleSubmit}
+              action="https://formspree.io/f/xgoqkdjg"
+              method="POST"
               className="space-y-6"
             >
               <input
@@ -193,24 +143,12 @@ export function Contact() {
 
               <button
                 type="submit"
-                disabled={status === "loading"}
                 className="relative group w-full md:w-auto overflow-hidden bg-sunset hover:bg-sunset/90 text-light px-8 py-4 rounded font-sans text-lg flex items-center justify-center gap-2 transition-colors interactive"
               >
-                <span className="relative z-10 font-bold">
-                  {status === "loading" ? "Sending..." : "Send Message"}
-                </span>
+                <span className="relative z-10 font-bold">Send Message</span>
                 <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
                 <div className="absolute inset-0 bg-white/20 animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite] pointer-events-none"></div>
               </button>
-              {message && (
-                <p
-                  className={`text-sm font-mono ${
-                    status === "success" ? "text-brand" : "text-red-400"
-                  }`}
-                >
-                  {message}
-                </p>
-              )}
             </form>
           </div>
 
