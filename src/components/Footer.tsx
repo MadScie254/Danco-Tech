@@ -31,6 +31,7 @@ export function Footer() {
               {[
                 "Home",
                 "About",
+                "Case Studies",
                 "Services",
                 "Projects",
                 "Research",
@@ -44,6 +45,8 @@ export function Footer() {
                           ? "hero"
                           : link.toLowerCase() === "about"
                             ? "about-founder"
+                            : link.toLowerCase() === "case studies"
+                              ? "case-studies"
                             : link.toLowerCase(),
                       );
                       if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -78,6 +81,18 @@ export function Footer() {
                 Subscribe
               </button>
             </form>
+            <div id="privacy" className="mt-6 text-xs text-light/50">
+              Privacy: analytics only load after consent and anonymize IPs.
+              <button
+                type="button"
+                onClick={() =>
+                  window.dispatchEvent(new Event("cookie-consent:open"))
+                }
+                className="ml-2 text-brand hover:text-brand/80 transition-colors"
+              >
+                Manage cookies
+              </button>
+            </div>
           </div>
         </div>
 
@@ -89,7 +104,7 @@ export function Footer() {
             <a
               href="https://github.com/MadScie254"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="hover:text-brand transition-colors"
             >
               github.com/MadScie254
