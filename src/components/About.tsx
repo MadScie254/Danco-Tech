@@ -11,10 +11,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const PROFILE_PHOTO_JPG = "/assets/photo/profile.jpg";
-const PROFILE_PHOTO_WEBP = "/assets/photo/profile.webp";
-const PROFILE_PHOTO_AVIF = "/assets/photo/profile.avif";
-const RESUME_PDF = "/assets/resume/Danco-Analytics-Resume.pdf";
+const BASE_URL = import.meta.env.BASE_URL ?? "/";
+const PROFILE_PHOTO_JPG = `${BASE_URL}assets/photo/profile.jpg`;
+const PROFILE_PHOTO_WEBP = `${BASE_URL}assets/photo/profile.webp`;
+const PROFILE_PHOTO_AVIF = `${BASE_URL}assets/photo/profile.avif`;
+const RESUME_PDF = `${BASE_URL}assets/resume/Danco-Analytics-Resume.pdf`;
 
 const SKILLS = {
   LANGUAGES: ["Python", "SQL", "R", "JavaScript", "TypeScript", "HTML/CSS"],
@@ -125,19 +126,19 @@ export function About() {
                   <CheckCircle2 className="w-4 h-4 text-brand mt-0.5 shrink-0" />
                   <span className="text-sm text-light/80">
                     MSc Data Science & ML — The Co-operative University of Kenya
-                    (In Progress)
+                    (2024–2026)
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-4 h-4 text-brand mt-0.5 shrink-0" />
                   <span className="text-sm text-light/80">
-                    BSc Information Technology — Zetech University, Ruiru (2022)
+                    BSc Information Technology — Zetech University, Ruiru (2018–2022)
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-4 h-4 text-brand mt-0.5 shrink-0" />
                   <span className="text-sm text-light/80">
-                    Data Science Bootcamp — Moringa School, Nairobi
+                    Data Science Bootcamp — Moringa School, Nairobi (2023)
                   </span>
                 </div>
                 <div className="flex items-start gap-3">

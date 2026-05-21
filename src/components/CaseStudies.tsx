@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowUpRight, TrendingUp, Clock, ShieldCheck } from "lucide-react";
 
+const BASE_URL = import.meta.env.BASE_URL ?? "/";
 const CASE_STUDIES = [
   {
     title: "Smart Grid Theft Detection",
@@ -12,9 +13,9 @@ const CASE_STUDIES = [
     timeline: "12 weeks",
     stack: ["XGBoost", "SMOTE+ENN", "FastAPI", "PostgreSQL"],
     image: {
-      avif: "/assets/case-studies/smart-grid.avif",
-      webp: "/assets/case-studies/smart-grid.webp",
-      jpg: "/assets/case-studies/smart-grid.jpg",
+      avif: `${BASE_URL}assets/case-studies/smart-grid.avif`,
+      webp: `${BASE_URL}assets/case-studies/smart-grid.webp`,
+      jpg: `${BASE_URL}assets/case-studies/smart-grid.jpg`,
       alt: "Smart grid analytics dashboard",
     },
   },
@@ -28,9 +29,9 @@ const CASE_STUDIES = [
     timeline: "10 weeks",
     stack: ["React", "Supabase", "M-Pesa", "Recharts"],
     image: {
-      avif: "/assets/case-studies/real-estate.avif",
-      webp: "/assets/case-studies/real-estate.webp",
-      jpg: "/assets/case-studies/real-estate.jpg",
+      avif: `${BASE_URL}assets/case-studies/real-estate.avif`,
+      webp: `${BASE_URL}assets/case-studies/real-estate.webp`,
+      jpg: `${BASE_URL}assets/case-studies/real-estate.jpg`,
       alt: "Real estate SaaS reporting screens",
     },
   },
@@ -44,9 +45,9 @@ const CASE_STUDIES = [
     timeline: "8 weeks",
     stack: ["Python", "Power BI", "Linux", "CI/CD"],
     image: {
-      avif: "/assets/case-studies/health-it.avif",
-      webp: "/assets/case-studies/health-it.webp",
-      jpg: "/assets/case-studies/health-it.jpg",
+      avif: `${BASE_URL}assets/case-studies/health-it.avif`,
+      webp: `${BASE_URL}assets/case-studies/health-it.webp`,
+      jpg: `${BASE_URL}assets/case-studies/health-it.jpg`,
       alt: "Hospital operations dashboards",
     },
   },

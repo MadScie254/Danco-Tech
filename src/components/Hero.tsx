@@ -3,7 +3,8 @@ import Typed from "typed.js";
 import { ArrowRight, ArrowUpRight, Activity, BarChart2, GraduationCap, Building2, Globe2, MapPin, Download } from "lucide-react";
 import { ParticlesBackground } from "./ParticlesBackground";
 
-const RESUME_PDF = "/assets/resume/Danco-Analytics-Resume.pdf";
+const BASE_URL = import.meta.env.BASE_URL ?? "/";
+const RESUME_PDF = `${BASE_URL}assets/resume/Danco-Analytics-Resume.pdf`;
 
 export function Hero() {
   const typeTarget = useRef<HTMLSpanElement>(null);
