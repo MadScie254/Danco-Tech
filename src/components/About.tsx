@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Download,
   CheckCircle2,
@@ -10,6 +10,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const PROFILE_PHOTO = "/assets/photo/profile.jpg";
+const RESUME_PDF = "/assets/resume/Danco-Analytics-Resume.pdf";
 
 const SKILLS = {
   LANGUAGES: ["Python", "SQL", "R", "JavaScript", "TypeScript", "HTML/CSS"],
@@ -35,6 +38,7 @@ const SKILLS = {
 
 export function About() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [photoLoadError, setPhotoLoadError] = useState(false);
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -82,9 +86,18 @@ export function About() {
             <div className="bg-primary border border-light/10 rounded-xl p-6 sticky top-24">
               <div className="relative w-full aspect-square bg-surface border border-light/5 rounded-lg mb-6 flex items-center justify-center overflow-hidden group">
                 <div className="absolute inset-0 bg-brand/5 group-hover:bg-brand/10 transition-colors z-10" />
-                <div className="text-6xl font-display font-bold text-brand opacity-60">
-                  DW
-                </div>
+                {!photoLoadError ? (
+                  <img
+                    src={PROFILE_PHOTO}
+                    alt="Daniel Wanjala Machimbo"
+                    className="absolute inset-0 h-full w-full object-cover"
+                    onError={() => setPhotoLoadError(true)}
+                  />
+                ) : (
+                  <div className="text-6xl font-display font-bold text-brand opacity-60">
+                    DW
+                  </div>
+                )}
                 <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-primary to-transparent z-20">
                   <div className="inline-flex items-center gap-1.5 bg-black/60 backdrop-blur px-2 py-1 rounded-full text-[10px] font-mono text-light">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
@@ -129,7 +142,9 @@ export function About() {
                 <a
                   href="https://github.com/MadScie254"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub profile"
+                  title="GitHub profile"
                   className="w-10 h-10 rounded-full bg-light/5 flex items-center justify-center hover:bg-brand hover:text-primary transition-colors interactive"
                 >
                   <Github className="w-5 h-5" />
@@ -137,7 +152,9 @@ export function About() {
                 <a
                   href="https://linkedin.com/in/daniel-wanjala-msc-912b8b17b/"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn profile"
+                  title="LinkedIn profile"
                   className="w-10 h-10 rounded-full bg-light/5 flex items-center justify-center hover:bg-brand hover:text-primary transition-colors interactive"
                 >
                   <Linkedin className="w-5 h-5" />
@@ -145,16 +162,32 @@ export function About() {
                 <a
                   href="https://danco-analytics.github.io/Portifolio/"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
+                  aria-label="Portfolio"
+                  title="Portfolio"
                   className="w-10 h-10 rounded-full bg-light/5 flex items-center justify-center hover:bg-brand hover:text-primary transition-colors interactive text-xs font-bold"
                 >
                   Portfolio
                 </a>
               </div>
 
-              <button className="w-full bg-light/5 hover:bg-light/10 border border-light/10 border-dashed text-light py-3 rounded font-medium transition-colors flex items-center justify-center gap-2 text-sm">
-                <Download className="w-4 h-4" /> Download CV (PDF)
-              </button>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <a
+                  href={RESUME_PDF}
+                  download
+                  className="w-full bg-light/5 hover:bg-light/10 border border-light/10 border-dashed text-light py-3 rounded font-medium transition-colors flex items-center justify-center gap-2 text-sm"
+                >
+                  <Download className="w-4 h-4" /> Download CV (PDF)
+                </a>
+                <a
+                  href={PROFILE_PHOTO}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-light/5 hover:bg-light/10 border border-light/10 text-light py-3 rounded font-medium transition-colors flex items-center justify-center gap-2 text-sm"
+                >
+                  View Photo Asset
+                </a>
+              </div>
             </div>
           </div>
 
