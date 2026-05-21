@@ -111,7 +111,7 @@ export function GithubProjects() {
             <a
               href="https://github.com/MadScie254"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="text-sm font-mono text-light/50 hover:text-brand transition-colors"
             >
               @MadScie254
@@ -119,7 +119,7 @@ export function GithubProjects() {
             <a
               href="https://github.com/Danco-Analytics"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="text-sm font-mono text-light/50 hover:text-brand transition-colors"
             >
               @Danco-Analytics
@@ -137,7 +137,7 @@ export function GithubProjects() {
                 <a
                   href={repo.url}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="font-mono text-brand hover:underline font-bold text-[15px] truncate pr-4"
                 >
                   {repo.name}
@@ -168,7 +168,7 @@ export function GithubProjects() {
                 <a
                   href={repo.url}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="ml-auto flex items-center gap-1 text-light/30 hover:text-light transition-colors"
                 >
                   View <ArrowUpRight className="w-3 h-3" />
@@ -182,7 +182,7 @@ export function GithubProjects() {
           <a
             href="https://github.com/MadScie254"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-light/5 hover:bg-light/10 px-8 py-4 rounded text-sm font-medium transition-colors border border-light/10"
           >
             <Github className="w-5 h-5" /> Browse All Repositories on GitHub{" "}
