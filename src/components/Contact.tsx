@@ -39,7 +39,13 @@ export function Contact() {
       });
 
       if (!response.ok) {
-        throw new Error("Unable to send message.");
+        if (response.status === 404) {
+          throw new Error(
+            "Contact form works after deployment. Please try again on the live site.",
+          );
+        }
+        const errorText = await response.text();
+        throw new Error(errorText || "Unable to send message.");
       }
 
       setStatus("success");
@@ -47,7 +53,11 @@ export function Contact() {
       form.reset();
     } catch (error) {
       setStatus("error");
-      setMessage("Something went wrong. Please try again.");
+      if (error instanceof Error && error.message) {
+        setMessage(error.message);
+      } else {
+        setMessage("Something went wrong. Please try again.");
+      }
     }
   };
 
