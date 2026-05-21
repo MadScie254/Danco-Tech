@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ArrowRight,
   Mail,
@@ -7,10 +7,50 @@ import {
   Clock,
   Github,
   Linkedin,
-  Twitter,
 } from "lucide-react";
 
 export function Contact() {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
+    "idle",
+  );
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setStatus("loading");
+    setMessage("");
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get("name") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      company: String(formData.get("company") ?? ""),
+      projectType: String(formData.get("project_type") ?? ""),
+      message: String(formData.get("message") ?? ""),
+      honeypot: String(formData.get("company_website") ?? ""),
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Unable to send message.");
+      }
+
+      setStatus("success");
+      setMessage("Thanks! Your message has been sent.");
+      form.reset();
+    } catch (error) {
+      setStatus("error");
+      setMessage("Something went wrong. Please try again.");
+    }
+  };
+
   return (
     <section
       id="contact"
@@ -40,11 +80,17 @@ export function Contact() {
           {/* Form */}
           <div>
             <form
-              action="mailto:danielwanjalamachimbo@gmail.com"
-              method="GET"
-              encType="text/plain"
+              onSubmit={handleSubmit}
               className="space-y-6"
             >
+              <input
+                type="text"
+                name="company_website"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                aria-hidden="true"
+              />
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label
@@ -102,7 +148,7 @@ export function Contact() {
                 </label>
                 <select
                   id="project_type"
-                  name="subject"
+                  name="project_type"
                   className="w-full bg-surface/50 border border-light/10 rounded-md px-4 py-3 text-light focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors appearance-none"
                 >
                   <option className="bg-primary text-light">AI/ML Model</option>
@@ -128,7 +174,7 @@ export function Contact() {
                 </label>
                 <textarea
                   id="message"
-                  name="body"
+                  name="message"
                   rows={5}
                   className="w-full bg-surface/50 border border-light/10 rounded-md px-4 py-3 text-light focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors resize-none"
                   required
@@ -137,12 +183,24 @@ export function Contact() {
 
               <button
                 type="submit"
+                disabled={status === "loading"}
                 className="relative group w-full md:w-auto overflow-hidden bg-sunset hover:bg-sunset/90 text-light px-8 py-4 rounded font-sans text-lg flex items-center justify-center gap-2 transition-colors interactive"
               >
-                <span className="relative z-10 font-bold">Send Message</span>
+                <span className="relative z-10 font-bold">
+                  {status === "loading" ? "Sending..." : "Send Message"}
+                </span>
                 <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
                 <div className="absolute inset-0 bg-white/20 animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite] pointer-events-none"></div>
               </button>
+              {message && (
+                <p
+                  className={`text-sm font-mono ${
+                    status === "success" ? "text-brand" : "text-red-400"
+                  }`}
+                >
+                  {message}
+                </p>
+              )}
             </form>
           </div>
 
