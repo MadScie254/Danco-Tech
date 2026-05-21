@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import Typed from "typed.js";
-import { ArrowRight, ArrowUpRight, Activity, BarChart2, GraduationCap, Building2, Globe2, MapPin } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Activity, BarChart2, GraduationCap, Building2, Globe2, MapPin, Download } from "lucide-react";
 import { ParticlesBackground } from "./ParticlesBackground";
+
+const RESUME_PDF = "/assets/resume/Danco-Analytics-Resume.pdf";
 
 export function Hero() {
   const typeTarget = useRef<HTMLSpanElement>(null);
@@ -53,31 +55,39 @@ export function Hero() {
             for Africa's Future.
           </h1>
 
-          <p className="text-lg text-light/70 max-w-[480px] leading-relaxed mb-10">
-            Danco Analytics is a Nairobi-born AI and data company building ML
-            models, SaaS products, and intelligent infrastructure that solve
-            Africa's hardest problems — from electricity theft detection to real
-            estate automation.
+          <p className="text-lg text-light/70 max-w-[520px] leading-relaxed mb-10">
+            Danco Analytics helps African teams ship production ML and data
+            products in weeks. We turn messy operational data into models,
+            dashboards, and automated systems with measurable impact.
           </p>
 
           <div className="flex flex-wrap items-center gap-4 mb-12">
             <button
               onClick={() =>
                 document
-                  .getElementById("projects")
+                  .getElementById("case-studies")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
               className="bg-brand hover:bg-brand/90 text-primary px-6 py-3 rounded font-medium flex items-center gap-2 transition-colors interactive"
             >
-              Explore Our Work <ArrowRight className="w-4 h-4" />
+              See Case Studies <ArrowRight className="w-4 h-4" />
             </button>
-            <a
-              href="https://github.com/MadScie254"
-              target="_blank"
-              rel="noreferrer"
+            <button
+              onClick={() =>
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
               className="border border-light/20 hover:bg-light/5 text-light px-6 py-3 rounded font-medium flex items-center gap-2 transition-colors interactive"
             >
-              View GitHub <ArrowUpRight className="w-4 h-4" />
+              Start a Project <ArrowUpRight className="w-4 h-4" />
+            </button>
+            <a
+              href={RESUME_PDF}
+              download
+              className="border border-light/20 hover:bg-light/5 text-light px-6 py-3 rounded font-medium flex items-center gap-2 transition-colors interactive"
+            >
+              Download Resume <Download className="w-4 h-4" />
             </a>
           </div>
 
