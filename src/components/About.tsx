@@ -11,7 +11,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const PROFILE_PHOTO = "/assets/photo/profile.jpg";
+const PROFILE_PHOTO_JPG = "/assets/photo/profile.jpg";
+const PROFILE_PHOTO_WEBP = "/assets/photo/profile.webp";
+const PROFILE_PHOTO_AVIF = "/assets/photo/profile.avif";
 const RESUME_PDF = "/assets/resume/Danco-Analytics-Resume.pdf";
 
 const SKILLS = {
@@ -87,12 +89,19 @@ export function About() {
               <div className="relative w-full aspect-square bg-surface border border-light/5 rounded-lg mb-6 flex items-center justify-center overflow-hidden group">
                 <div className="absolute inset-0 bg-brand/5 group-hover:bg-brand/10 transition-colors z-10" />
                 {!photoLoadError ? (
-                  <img
-                    src={PROFILE_PHOTO}
-                    alt="Daniel Wanjala Machimbo"
-                    className="absolute inset-0 h-full w-full object-cover"
-                    onError={() => setPhotoLoadError(true)}
-                  />
+                  <picture className="absolute inset-0 h-full w-full">
+                    <source srcSet={PROFILE_PHOTO_AVIF} type="image/avif" />
+                    <source srcSet={PROFILE_PHOTO_WEBP} type="image/webp" />
+                    <img
+                      src={PROFILE_PHOTO_JPG}
+                      alt="Daniel Wanjala Machimbo"
+                      className="h-full w-full object-cover"
+                      onError={() => setPhotoLoadError(true)}
+                      loading="eager"
+                      decoding="async"
+                      fetchPriority="high"
+                    />
+                  </picture>
                 ) : (
                   <div className="text-6xl font-display font-bold text-brand opacity-60">
                     DW
@@ -180,7 +189,7 @@ export function About() {
                   <Download className="w-4 h-4" /> Download CV (PDF)
                 </a>
                 <a
-                  href={PROFILE_PHOTO}
+                  href={PROFILE_PHOTO_JPG}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full bg-light/5 hover:bg-light/10 border border-light/10 text-light py-3 rounded font-medium transition-colors flex items-center justify-center gap-2 text-sm"
