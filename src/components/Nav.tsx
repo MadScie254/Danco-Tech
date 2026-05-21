@@ -5,6 +5,7 @@ import { BarChart3, Menu, X, ArrowRight, Sun, Moon } from "lucide-react";
 const LINKS = [
   "Home",
   "About",
+  "Case Studies",
   "Services",
   "Projects",
   "Research",
@@ -51,8 +52,15 @@ export function Nav() {
 
   const scrollTo = (id: string) => {
     setMobileMenuOpen(false);
+    const normalized = id.toLowerCase();
     const el = document.getElementById(
-      id.toLowerCase() === "home" ? "hero" : id.toLowerCase(),
+      normalized === "home"
+        ? "hero"
+        : normalized === "about"
+          ? "about-founder"
+          : normalized === "case studies"
+            ? "case-studies"
+            : normalized,
     );
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
@@ -122,6 +130,7 @@ export function Nav() {
           <button
             className="lg:hidden text-light p-2"
             onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open navigation menu"
           >
             <Menu className="w-6 h-6" />
           </button>
@@ -140,6 +149,7 @@ export function Nav() {
         <button
           className="absolute top-6 right-6 lg:right-12 text-light p-2"
           onClick={() => setMobileMenuOpen(false)}
+          aria-label="Close navigation menu"
         >
           <X className="w-8 h-8" />
         </button>
