@@ -93,26 +93,22 @@ export function About() {
               <div className="relative w-full aspect-square bg-surface border border-light/5 rounded-lg mb-6 flex items-center justify-center overflow-hidden group">
                 <div className="absolute inset-0 bg-brand/5 group-hover:bg-brand/10 transition-colors z-10" />
                 {!photoLoadError ? (
-                  <picture className="absolute inset-0 h-full w-full">
-                    <source srcSet={PROFILE_PHOTO_AVIF} type="image/avif" />
-                    <source srcSet={PROFILE_PHOTO_WEBP} type="image/webp" />
-                    <img
-                      src={photoCandidates[photoSrcIndex]}
-                      alt="Daniel Wanjala Machimbo"
-                      className="h-full w-full object-cover"
-                      onError={() => {
-                        if (photoSrcIndex < photoCandidates.length - 1) {
-                          setPhotoSrcIndex(photoSrcIndex + 1);
-                          return;
-                        }
-                        setPhotoLoadError(true);
-                      }}
-                      loading="eager"
-                      decoding="async"
-                      fetchPriority="high"
-                      sizes="(max-width: 1024px) 100vw, 380px"
-                    />
-                  </picture>
+                  <img
+                    src={photoCandidates[photoSrcIndex]}
+                    alt="Daniel Wanjala Machimbo"
+                    className="absolute inset-0 h-full w-full object-cover"
+                    onError={() => {
+                      if (photoSrcIndex < photoCandidates.length - 1) {
+                        setPhotoSrcIndex(photoSrcIndex + 1);
+                        return;
+                      }
+                      setPhotoLoadError(true);
+                    }}
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                    sizes="(max-width: 1024px) 100vw, 380px"
+                  />
                 ) : (
                   <div className="text-6xl font-display font-bold text-brand opacity-60">
                     DW
