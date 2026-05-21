@@ -15,24 +15,33 @@ gsap.registerPlugin(ScrollTrigger);
 
 const TIMELINE_DATA = [
   {
-    year: "2005",
-    title: "WEBUYE ACK & ST. ANTHONY",
+    year: "2015",
+    title: "WEBUYE ACK PRIMARY",
     description:
-      "Began early education at Webuye ACK Primary, later advancing to St. Anthony High School Kitale. The foundation of discipline and academic rigor took root here.",
+      "Completed primary education at Webuye ACK Primary. The foundation of discipline and academic rigor took root here.",
     quote: "Education wasn't just a path; it was a promise.",
     icon: <GraduationCap className="w-6 h-6" />,
   },
   {
     year: "2018",
-    title: "ZETECH UNIVERSITY, RUIRU",
+    title: "ST. ANTHONY HIGH SCHOOL, KITALE",
     description:
-      "BSc Information Technology begins in Ruiru. Daniel discovers Python. Writes his first ML model. Realizes data science is not just a career — it's a lens.",
+      "Completed secondary education, sharpening leadership, discipline, and resilience that would shape the next academic steps.",
     quote:
       "I saw a dataset of Kenyan crop failures and thought: someone should have predicted this. I decided that someone would be me.",
     icon: <Monitor className="w-6 h-6" />,
   },
   {
-    year: "2021",
+    year: "2018–2022",
+    title: "ZETECH UNIVERSITY, RUIRU",
+    description:
+      "BSc Information Technology. Deep dive into software systems, data, and engineering fundamentals that paved the way for applied AI.",
+    quote:
+      "I realized data science wasn't just a career — it was a lens.",
+    icon: <GraduationCap className="w-6 h-6" />,
+  },
+  {
+    year: "2023",
     title: "MORINGA SCHOOL, NAIROBI",
     description:
       "Data Science & Software Engineering Bootcamp. 12 weeks. 80-hour weeks. Production-grade projects. Capstone project: InvestWise Predictor — an ML-powered investment advisory tool for the Kenyan market.",
@@ -65,7 +74,7 @@ const TIMELINE_DATA = [
     icon: <TrendingUp className="w-6 h-6" />,
   },
   {
-    year: "2025–2026",
+    year: "2024–2026",
     title: "MSc RESEARCH & SCALE",
     description:
       'Enrolls in MSc Data Science & Machine Learning at The Co-operative University of Kenya. Research: "ML-Based Electricity Theft Detection Under Severe Class Imbalance" — directly applicable to Kenya Power (KPLC). Danco Analytics now serves clients across healthcare, agri, real estate, and finance.',

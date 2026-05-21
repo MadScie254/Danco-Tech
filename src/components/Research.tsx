@@ -74,7 +74,7 @@ export function Research() {
               <div className="flex gap-4">
                 <span className="text-light/40 w-24">STATUS</span>
                 <span className="text-[#C5A059]">
-                  MSc Research — In Progress (2025–2026)
+                  MSc Research — In Progress (2024–2026)
                 </span>
               </div>
             </div>
