@@ -92,6 +92,7 @@ export function CaseStudies() {
                     className="h-52 w-full object-cover"
                     loading="lazy"
                     decoding="async"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                   />
                 </picture>
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />

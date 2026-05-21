@@ -37,7 +37,13 @@ export function Nav() {
       let current = "Home";
       for (const section of sections) {
         const el = document.getElementById(
-          section === "home" ? "hero" : section,
+          section === "home"
+            ? "hero"
+            : section === "about"
+              ? "about-founder"
+              : section === "case studies"
+                ? "case-studies"
+                : section,
         );
         if (el && window.scrollY >= el.offsetTop - 200) {
           current = section;

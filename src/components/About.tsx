@@ -100,6 +100,7 @@ export function About() {
                       loading="eager"
                       decoding="async"
                       fetchPriority="high"
+                      sizes="(max-width: 1024px) 100vw, 380px"
                     />
                   </picture>
                 ) : (
