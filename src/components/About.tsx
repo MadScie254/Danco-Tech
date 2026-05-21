@@ -15,6 +15,7 @@ const BASE_URL = import.meta.env.BASE_URL ?? "/";
 const PROFILE_PHOTO_JPG = `${BASE_URL}assets/photo/profile.jpg`;
 const PROFILE_PHOTO_WEBP = `${BASE_URL}assets/photo/profile.webp`;
 const PROFILE_PHOTO_AVIF = `${BASE_URL}assets/photo/profile.avif`;
+const PROFILE_PHOTO_FALLBACK = "assets/photo/profile.jpg";
 const RESUME_PDF = `${BASE_URL}assets/resume/Danco-Analytics-Resume.pdf`;
 
 const SKILLS = {
@@ -42,6 +43,8 @@ const SKILLS = {
 export function About() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [photoLoadError, setPhotoLoadError] = useState(false);
+  const [photoSrcIndex, setPhotoSrcIndex] = useState(0);
+  const photoCandidates = [PROFILE_PHOTO_JPG, PROFILE_PHOTO_FALLBACK];
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -94,10 +97,16 @@ export function About() {
                     <source srcSet={PROFILE_PHOTO_AVIF} type="image/avif" />
                     <source srcSet={PROFILE_PHOTO_WEBP} type="image/webp" />
                     <img
-                      src={PROFILE_PHOTO_JPG}
+                      src={photoCandidates[photoSrcIndex]}
                       alt="Daniel Wanjala Machimbo"
                       className="h-full w-full object-cover"
-                      onError={() => setPhotoLoadError(true)}
+                      onError={() => {
+                        if (photoSrcIndex < photoCandidates.length - 1) {
+                          setPhotoSrcIndex(photoSrcIndex + 1);
+                          return;
+                        }
+                        setPhotoLoadError(true);
+                      }}
                       loading="eager"
                       decoding="async"
                       fetchPriority="high"
