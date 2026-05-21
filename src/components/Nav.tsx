@@ -33,9 +33,9 @@ export function Nav() {
       setScrolled(window.scrollY > 80);
 
       // check visible section
-      const sections = LINKS.map((l) => l.toLowerCase());
       let current = "Home";
-      for (const section of sections) {
+      for (const link of LINKS) {
+        const section = link.toLowerCase();
         const el = document.getElementById(
           section === "home"
             ? "hero"
@@ -46,10 +46,10 @@ export function Nav() {
                 : section,
         );
         if (el && window.scrollY >= el.offsetTop - 200) {
-          current = section;
+          current = link;
         }
       }
-      setActiveSection(current.charAt(0).toUpperCase() + current.slice(1));
+      setActiveSection(current);
     };
 
     window.addEventListener("scroll", handleScroll);

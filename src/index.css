@@ -80,6 +80,17 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand) 30%, transparent);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @keyframes ticker {
   0% {
     transform: translate3d(0, 0, 0);
