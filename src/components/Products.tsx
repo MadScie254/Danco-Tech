@@ -287,7 +287,8 @@ export function Products() {
                     <a 
                       href={selectedProject.link} 
                       target="_blank" 
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
+                      aria-label={`View source code for ${selectedProject.title}`}
                       className="inline-flex items-center gap-2 bg-light text-primary px-4 py-2 rounded text-sm font-semibold hover:bg-light/90 transition-colors w-full justify-center"
                     >
                       View Source Code <ArrowUpRight className="w-4 h-4" />

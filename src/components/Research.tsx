@@ -123,7 +123,8 @@ export function Research() {
           <a
             href="https://orcid.org/0009-0005-1979-8555"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
+            aria-label="ORCID profile"
             className="flex items-center gap-3 border border-light/20 hover:border-[#C5A059] hover:bg-[#C5A059]/5 px-4 py-2 rounded transition-colors group interactive"
           >
             <div className="w-6 h-6 rounded-full bg-[#C5A059] flex items-center justify-center text-primary font-bold text-[10px]">
