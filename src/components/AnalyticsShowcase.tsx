@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -7,9 +7,8 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  AreaChart,
-  Area,
 } from "recharts";
+import { REDUCED_MOTION_QUERY, prefersReducedMotion } from "../lib/motion";
 
 const MOCK_GDP_DATA = [
   { year: "2018", actual: 5.6, predicted: 5.5 },
@@ -24,6 +23,19 @@ const MOCK_GDP_DATA = [
 
 export function AnalyticsShowcase() {
   const [activeView, setActiveView] = useState<"gdp" | "sgcc">("gdp");
+  const [reduceMotion, setReduceMotion] = useState(() => prefersReducedMotion());
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(REDUCED_MOTION_QUERY);
+    setReduceMotion(mediaQuery.matches);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setReduceMotion(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   return (
     <section id="analytics" className="py-24 bg-primary border-t border-light/5">
@@ -95,8 +107,8 @@ export function AnalyticsShowcase() {
                         contentStyle={{ backgroundColor: '#111', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
                         itemStyle={{ color: '#fff' }}
                       />
-                      <Line type="monotone" dataKey="actual" stroke="#ffffff" strokeWidth={2} dot={{ r: 4, fill: '#fff' }} activeDot={{ r: 6 }} />
-                      <Line type="monotone" dataKey="predicted" stroke="#c5a059" strokeWidth={2} strokeDasharray="5 5" dot={{ r: 4, fill: '#c5a059' }} activeDot={{ r: 6 }} />
+                      <Line type="monotone" dataKey="actual" stroke="#ffffff" strokeWidth={2} dot={{ r: 4, fill: '#fff' }} activeDot={{ r: 6 }} isAnimationActive={!reduceMotion} />
+                      <Line type="monotone" dataKey="predicted" stroke="#c5a059" strokeWidth={2} strokeDasharray="5 5" dot={{ r: 4, fill: '#c5a059' }} activeDot={{ r: 6 }} isAnimationActive={!reduceMotion} />
                     </LineChart>
                   </ResponsiveContainer>
                 </>
@@ -118,10 +130,10 @@ export function AnalyticsShowcase() {
                     </div>
                     
                     <div className="relative w-full h-12 bg-light/5 rounded-full overflow-hidden mt-8">
-                      <div className="absolute top-0 left-0 h-full bg-brand flex items-center px-4 text-primary font-bold text-sm transition-all duration-1000" style={{ width: '50%' }}>
+                      <div className="absolute top-0 left-0 h-full bg-brand flex items-center px-4 text-primary font-bold text-sm motion-safe:transition-all motion-safe:duration-1000" style={{ width: '50%' }}>
                         50% (Synthetic + Real)
                       </div>
-                      <div className="absolute top-0 right-0 h-full flex items-center px-4 text-light/80 font-bold text-sm justify-end transition-all duration-1000" style={{ width: '50%' }}>
+                      <div className="absolute top-0 right-0 h-full flex items-center px-4 text-light/80 font-bold text-sm justify-end motion-safe:transition-all motion-safe:duration-1000" style={{ width: '50%' }}>
                         50% (Normal)
                       </div>
                       <div className="absolute -top-6 text-xs text-light/40 font-mono">After SMOTE Technique</div>

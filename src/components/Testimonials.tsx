@@ -1,8 +1,9 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { A11y, Autoplay, Keyboard } from "swiper/modules";
 import "swiper/css";
 import { Star } from "lucide-react";
+import { REDUCED_MOTION_QUERY, prefersReducedMotion } from "../lib/motion";
 
 const TESTIMONIALS = [
   {
@@ -32,6 +33,20 @@ const TESTIMONIALS = [
 ];
 
 export function Testimonials() {
+  const [reduceMotion, setReduceMotion] = useState(() => prefersReducedMotion());
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(REDUCED_MOTION_QUERY);
+    setReduceMotion(mediaQuery.matches);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setReduceMotion(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
   return (
     <section
       id="testimonials"
@@ -48,25 +63,31 @@ export function Testimonials() {
 
       <div className="pl-6 md:pl-12">
         <Swiper
-          modules={[Autoplay]}
+          modules={[A11y, Autoplay, Keyboard]}
           spaceBetween={30}
           slidesPerView={1.2}
           breakpoints={{
             640: { slidesPerView: 2.2 },
             1024: { slidesPerView: 3.2 },
           }}
-          autoplay={{
-            delay: 4000,
-            disableOnInteraction: true,
-            pauseOnMouseEnter: true,
-          }}
-          loop={true}
+          autoplay={
+            reduceMotion
+              ? false
+              : {
+                  delay: 4000,
+                  disableOnInteraction: true,
+                  pauseOnMouseEnter: true,
+                }
+          }
+          keyboard={{ enabled: true }}
+          loop={!reduceMotion}
+          a11y={{ enabled: true }}
           className="!pb-12"
         >
-          {TESTIMONIALS.map((t, i) => (
-            <SwiperSlide key={i} className="h-auto">
+          {TESTIMONIALS.map((t) => (
+            <SwiperSlide key={`${t.author}-${t.org}`} className="h-auto">
               <div className="h-full bg-surface/40 border border-light/10 p-8 rounded-xl flex flex-col cursor-grab active:cursor-grabbing hover:bg-surface/60 transition-colors">
-                <div className="flex gap-1 mb-6">
+                <div className="flex gap-1 mb-6" aria-hidden="true">
                   {[...Array(5)].map((_, j) => (
                     <Star key={j} className="w-4 h-4 fill-brand text-brand" />
                   ))}

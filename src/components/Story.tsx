@@ -45,15 +45,15 @@ const TIMELINE_DATA = [
     year: "2023",
     title: "MORINGA SCHOOL, NAIROBI",
     description:
-      "Data Science & Software Engineering Bootcamp. 12 weeks. 80-hour weeks. Production-grade projects. Capstone project: InvestWise Predictor — an ML-powered investment advisory tool for the Kenyan market.",
+      "Completed a Distinction Certificate in Data Science & Machine Learning. Production-grade projects sharpened the move from analysis to deployable models.",
     quote: "Moringa didn't just teach me to code. It taught me to ship.",
     icon: <GraduationCap className="w-6 h-6" />,
   },
   {
-    year: "2022",
+    year: "2023",
     title: "HOSPITAL SYSTEMS & THE REAL WORLD",
     description:
-      'Joins Webuye County Hospital as Senior IT Consultant. Later, Kingdom Faith-Based Hospital. Manages mission-critical systems. Discovers what "uptime means life" feels like. Builds automation tools that cut manual reporting time by 60%.',
+      'Works across Webuye County Hospital as Senior IT Consultant and Kingdom Faith-based Hospital as Machine Learning Engineer. Focus areas include patient-inflow forecasting, clinical screening, and anomaly detection. Discovers what "uptime means life" feels like.',
     quote:
       "Healthcare data taught me that bad data systems don't just cost money. They cost lives.",
     icon: <Stethoscope className="w-6 h-6" />,
@@ -78,7 +78,7 @@ const TIMELINE_DATA = [
     year: "2024–2026",
     title: "MSc RESEARCH & SCALE",
     description:
-      'Enrolls in MSc Data Science & Machine Learning at The Co-operative University of Kenya. Research: "ML-Based Electricity Theft Detection Under Severe Class Imbalance" — directly applicable to Kenya Power (KPLC). Danco Analytics now serves clients across healthcare, agri, real estate, and finance.',
+      'Enrolls in MSc Data Science & Machine Learning at The Co-operative University of Kenya (Sep 2024–Apr 2026). Since June 2024, works as Machine Learning Engineer at Danco Analytics, Nairobi, while advancing research on electricity theft detection under severe class imbalance.',
     quote: "The mission has never been clearer.",
     icon: <Microchip className="w-6 h-6" />,
   },

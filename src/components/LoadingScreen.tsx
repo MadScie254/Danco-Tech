@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { cn } from "../lib/utils";
+import { prefersReducedMotion } from "../lib/motion";
 
 export function LoadingScreen() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => !prefersReducedMotion());
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    if (prefersReducedMotion()) {
+      setLoading(false);
+      return;
+    }
+
     // Prevent scrolling while loading
     document.body.style.overflow = "hidden";
 

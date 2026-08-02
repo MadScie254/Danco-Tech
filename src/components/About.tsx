@@ -134,25 +134,25 @@ export function About() {
                   <CheckCircle2 className="w-4 h-4 text-brand mt-0.5 shrink-0" />
                   <span className="text-sm text-light/80">
                     MSc Data Science & ML — The Co-operative University of Kenya
-                    (2024–2026)
+                    (Sep 2024–Apr 2026)
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-4 h-4 text-brand mt-0.5 shrink-0" />
                   <span className="text-sm text-light/80">
-                    BSc Information Technology — Zetech University, Ruiru (2018–2022)
+                    BSc — Zetech University Kenya (completed Nov 2022)
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-4 h-4 text-brand mt-0.5 shrink-0" />
                   <span className="text-sm text-light/80">
-                    Data Science Bootcamp — Moringa School, Nairobi (2023)
+                    Distinction Certificate, Data Science & ML — Moringa School (2023)
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-4 h-4 text-brand mt-0.5 shrink-0" />
                   <span className="text-sm text-light/80">
-                    Senior IT Consultant / Manager — Hospital Sector
+                    Machine Learning Engineer — Kingdom Faith-based Hospital (Jan 2023–present)
                   </span>
                 </div>
               </div>
