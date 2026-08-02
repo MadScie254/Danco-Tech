@@ -1,7 +1,10 @@
 import React from "react";
 import { BarChart3 } from "lucide-react";
+import { prefersReducedMotion } from "../lib/motion";
 
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="bg-primary pt-24 pb-8 border-t border-light/5">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -49,7 +52,11 @@ export function Footer() {
                               ? "case-studies"
                             : link.toLowerCase(),
                       );
-                      if (el) el.scrollIntoView({ behavior: "smooth" });
+                      if (el) {
+                        el.scrollIntoView({
+                          behavior: prefersReducedMotion() ? "auto" : "smooth",
+                        });
+                      }
                     }}
                     className="text-light/70 hover:text-brand transition-colors text-sm"
                   >
@@ -97,9 +104,9 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-light/10 text-xs font-mono text-light/40 gap-4 text-center md:text-left">
-          <div>© 2026 Danco Analytics. All rights reserved.</div>
+          <div>© {currentYear} Danco Analytics. All rights reserved.</div>
           <div className="flex gap-4">
-            <span>Founded in Nairobi, Kenya 🇰🇪</span>
+            <span>Based in Nairobi, Kenya 🇰🇪</span>
             <span className="hidden md:inline">·</span>
             <a
               href="https://github.com/MadScie254"

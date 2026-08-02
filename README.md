@@ -35,7 +35,6 @@ npm install
 Create a `.env.local` in the project root:
 
 ```bash
-AI_API_KEY=your_gemini_key
 VITE_GA4_ID=G-XXXXXXXXXX
 ```
 

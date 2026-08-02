@@ -126,6 +126,18 @@ export function Nav() {
 
           <div className="hidden lg:flex items-center gap-4">
             <button
+              type="button"
+              onClick={() => window.dispatchEvent(new Event("command-menu:open"))}
+              className="inline-flex items-center gap-2 rounded-full border border-light/10 bg-surface/40 px-3 py-1.5 text-xs font-mono text-light/50 hover:border-brand/40 hover:text-brand transition-colors"
+              aria-label="Open command menu"
+              title="Open command menu"
+            >
+              <kbd className="rounded border border-light/20 bg-primary px-1.5 py-0.5 font-sans text-[10px] text-light/70">
+                ⌘K
+              </kbd>
+              <span>Menu</span>
+            </button>
+            <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               className="p-2 text-light/70 hover:text-light transition-colors"
               aria-label="Toggle theme"

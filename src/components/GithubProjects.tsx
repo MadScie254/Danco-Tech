@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Github, Star, GitFork, ArrowUpRight } from "lucide-react";
+import { Github, ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prefersReducedMotion } from "../lib/motion";
@@ -13,8 +13,6 @@ const REPOS = [
       "Plant disease detection system using CNNs and image processing.",
     lang: "Jupyter Notebook",
     langColor: "#D4AF6E",
-    stars: 8,
-    forks: 3,
     url: "https://github.com/MadScie254/Capstone-Lazarus",
   },
   {
@@ -23,8 +21,6 @@ const REPOS = [
       "ML investment advisory for the Kenyan market. CBK data + NSE analysis.",
     lang: "Python",
     langColor: "#D4AF6E",
-    stars: 10,
-    forks: 1,
     url: "https://github.com/MadScie254/Invest-wise",
   },
   {
@@ -33,8 +29,6 @@ const REPOS = [
       "Kenya GDP growth prediction using Random Forest + HistGradientBoosting. Features: CBK exchange rates, inflation data, historical GDP.",
     lang: "Jupyter Notebook",
     langColor: "#D4AF6E",
-    stars: 5,
-    forks: 5,
     url: "https://github.com/MadScie254/Phase-3-project-modelling",
   },
   {
@@ -42,8 +36,6 @@ const REPOS = [
     description: '"Life-changing project" — ad click prediction ML pipeline.',
     lang: "Jupyter Notebook",
     langColor: "#D4AF6E",
-    stars: 3,
-    forks: 0,
     url: "https://github.com/MadScie254/ad-click-predictor",
   },
   {
@@ -51,8 +43,6 @@ const REPOS = [
     description: "Kenya GDP forecast over time — economic modelling template.",
     lang: "Jupyter Notebook",
     langColor: "#D4AF6E",
-    stars: 6,
-    forks: 2,
     url: "https://github.com/MadScie254/gdp_forcast_sample",
   },
   {
@@ -61,8 +51,6 @@ const REPOS = [
       "MSc coursework R statistical analysis & presentation. Academic research output.",
     lang: "HTML",
     langColor: "#D4AF6E",
-    stars: 2,
-    forks: 0,
     url: "https://github.com/Danco-Analytics/R_Presentation",
   },
 ];
@@ -131,9 +119,9 @@ export function GithubProjects() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 perspective-1000">
-          {REPOS.map((repo, i) => (
+          {REPOS.map((repo) => (
             <div
-              key={i}
+              key={repo.name}
               className="github-card flex flex-col bg-surface/40 border-l-[3px] border-l-brand border-y border-r border-y-light/10 border-r-light/10 p-6 rounded-r-lg hover:bg-surface/80 transition-colors"
             >
               <div className="flex items-start justify-between mb-3">
@@ -158,16 +146,6 @@ export function GithubProjects() {
                   />
                   {repo.lang}
                 </div>
-                {repo.stars > 0 && (
-                  <div className="flex items-center gap-1">
-                    <Star className="w-3.5 h-3.5" /> {repo.stars}
-                  </div>
-                )}
-                {repo.forks > 0 && (
-                  <div className="flex items-center gap-1">
-                    <GitFork className="w-3.5 h-3.5" /> {repo.forks}
-                  </div>
-                )}
                 <a
                   href={repo.url}
                   target="_blank"

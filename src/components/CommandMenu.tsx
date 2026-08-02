@@ -17,6 +17,12 @@ export function CommandMenu() {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
+  useEffect(() => {
+    const openMenu = () => setOpen(true);
+    window.addEventListener("command-menu:open", openMenu);
+    return () => window.removeEventListener("command-menu:open", openMenu);
+  }, []);
+
   if (!open) return null;
 
   return (
