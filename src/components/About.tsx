@@ -98,7 +98,7 @@ export function About() {
                 {!photoLoadError ? (
                   <img
                     src={photoCandidates[photoSrcIndex]}
-                    alt="Daniel Wanjala Machimbo"
+                    alt="Daniel Wanjala Machimbo - Machine Learning Engineer at Danco Analytics"
                     className="absolute inset-0 h-full w-full object-cover"
                     onError={() => {
                       if (photoSrcIndex < photoCandidates.length - 1) {

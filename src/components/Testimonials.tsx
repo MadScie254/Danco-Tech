@@ -112,7 +112,7 @@ export function Testimonials() {
                         t.photoUrl ? (
                           <img
                             src={t.photoUrl}
-                            alt={`${t.author} profile`}
+                            alt={`${t.author} profile picture for Danco Analytics testimonial`}
                             className="w-8 h-8 rounded-full object-cover border border-light/20"
                             loading="lazy"
                             decoding="async"

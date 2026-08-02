@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://danco-analytics.com/sitemap.xml
+Sitemap: https://danco-tech.dmwanjala254.workers.dev/sitemap.xml

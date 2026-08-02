@@ -18,7 +18,7 @@ const CASE_STUDIES = [
       avif: `${BASE_URL}assets/case-studies/smart-grid.avif`,
       webp: `${BASE_URL}assets/case-studies/smart-grid.webp`,
       jpg: `${BASE_URL}assets/case-studies/smart-grid.jpg`,
-      alt: "Smart grid analytics dashboard",
+      alt: "Smart Grid theft detection dashboard showing automated triage workflows",
     },
   },
   {
@@ -36,7 +36,7 @@ const CASE_STUDIES = [
       avif: `${BASE_URL}assets/case-studies/real-estate.avif`,
       webp: `${BASE_URL}assets/case-studies/real-estate.webp`,
       jpg: `${BASE_URL}assets/case-studies/real-estate.jpg`,
-      alt: "Real estate SaaS reporting screens",
+      alt: "NyumbaIQ rent collection dashboard showing M-Pesa reconciliation",
     },
   },
   {
@@ -54,7 +54,7 @@ const CASE_STUDIES = [
       avif: `${BASE_URL}assets/case-studies/health-it.avif`,
       webp: `${BASE_URL}assets/case-studies/health-it.webp`,
       jpg: `${BASE_URL}assets/case-studies/health-it.jpg`,
-      alt: "Hospital operations dashboards",
+      alt: "Hospital IT automation dashboard showing compliance and reporting metrics",
     },
   },
 ];
