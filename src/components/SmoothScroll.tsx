@@ -1,8 +1,11 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
+import { prefersReducedMotion } from '../lib/motion';
 
 export function SmoothScroll() {
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -13,14 +16,17 @@ export function SmoothScroll() {
       touchMultiplier: 2,
     });
 
+    let frameId = 0;
+
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      frameId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    frameId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(frameId);
       lenis.destroy();
     };
   }, []);

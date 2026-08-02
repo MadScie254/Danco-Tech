@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { ArrowUpRight, BookText } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { prefersReducedMotion } from "../lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -183,6 +184,8 @@ export function Articles() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     let ctx = gsap.context(() => {
       gsap.fromTo(
         ".article-card",

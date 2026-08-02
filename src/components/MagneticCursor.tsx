@@ -1,16 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { prefersReducedMotion } from "../lib/motion";
 
 export function MagneticCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
+  const hoveringRef = useRef(false);
   const [isHovering, setIsHovering] = useState(false);
+
+  useEffect(() => {
+    hoveringRef.current = isHovering;
+  }, [isHovering]);
 
   useEffect(() => {
     const cursor = cursorRef.current;
     if (!cursor) return;
 
     // Check if device supports hover (ignore on touch devices)
-    if (window.matchMedia("(pointer: coarse)").matches) {
+    if (prefersReducedMotion() || window.matchMedia("(pointer: coarse)").matches) {
       cursor.style.display = "none";
       return;
     }
@@ -27,7 +33,7 @@ export function MagneticCursor() {
       mouse.y = e.clientY;
     };
 
-    gsap.ticker.add(() => {
+    const updateCursor = () => {
       if (!cursor) return;
 
       const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio());
@@ -35,10 +41,10 @@ export function MagneticCursor() {
       pos.x += (mouse.x - pos.x) * dt;
       pos.y += (mouse.y - pos.y) * dt;
 
-      const elOffset = isHovering ? 20 : 10;
+      const elOffset = hoveringRef.current ? 20 : 10;
       xSet(pos.x - elOffset);
       ySet(pos.y - elOffset);
-    });
+    };
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -55,14 +61,16 @@ export function MagneticCursor() {
       }
     };
 
+    gsap.ticker.add(updateCursor);
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseover", handleMouseOver);
 
     return () => {
+      gsap.ticker.remove(updateCursor);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseover", handleMouseOver);
     };
-  }, [isHovering]);
+  }, []);
 
   return (
     <div

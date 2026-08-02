@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { cn } from "../lib/utils";
 import { BarChart3, Menu, X, ArrowRight, Sun, Moon } from "lucide-react";
+import { prefersReducedMotion } from "../lib/motion";
 
 const LINKS = [
   "Home",
@@ -12,6 +13,14 @@ const LINKS = [
   "Analytics",
   "GitHub",
 ];
+
+const getSectionId = (link: string) => {
+  const normalized = link.toLowerCase();
+  if (normalized === "home") return "hero";
+  if (normalized === "about") return "about-founder";
+  if (normalized === "case studies") return "case-studies";
+  return normalized;
+};
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -29,46 +38,43 @@ export function Nav() {
   }, [theme]);
 
   useEffect(() => {
-    const handleScroll = () => {
+    let animationFrame = 0;
+
+    const updateScrollState = () => {
       setScrolled(window.scrollY > 80);
 
-      // check visible section
       let current = "Home";
       for (const link of LINKS) {
-        const section = link.toLowerCase();
-        const el = document.getElementById(
-          section === "home"
-            ? "hero"
-            : section === "about"
-              ? "about-founder"
-              : section === "case studies"
-                ? "case-studies"
-                : section,
-        );
+        const el = document.getElementById(getSectionId(link));
         if (el && window.scrollY >= el.offsetTop - 200) {
           current = link;
         }
       }
       setActiveSection(current);
+      animationFrame = 0;
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      if (animationFrame) return;
+      animationFrame = window.requestAnimationFrame(updateScrollState);
+    };
+
+    updateScrollState();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const scrollTo = (id: string) => {
     setMobileMenuOpen(false);
-    const normalized = id.toLowerCase();
-    const el = document.getElementById(
-      normalized === "home"
-        ? "hero"
-        : normalized === "about"
-          ? "about-founder"
-          : normalized === "case studies"
-            ? "case-studies"
-            : normalized,
-    );
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    const el = document.getElementById(getSectionId(id));
+    if (el) {
+      el.scrollIntoView({
+        behavior: prefersReducedMotion() ? "auto" : "smooth",
+      });
+    }
   };
 
   return (

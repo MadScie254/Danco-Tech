@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Typed from "typed.js";
 import { ArrowRight, ArrowUpRight, Activity, BarChart2, GraduationCap, Building2, Globe2, MapPin, Download } from "lucide-react";
 import { ParticlesBackground } from "./ParticlesBackground";
+import { prefersReducedMotion } from "../lib/motion";
 
 const BASE_URL = import.meta.env.BASE_URL ?? "/";
 const RESUME_PDF = `${BASE_URL}assets/resume/Danco-Analytics-Resume.pdf`;
@@ -11,6 +12,8 @@ export function Hero() {
 
   useEffect(() => {
     if (!typeTarget.current) return;
+    if (prefersReducedMotion()) return;
+
     const typed = new Typed(typeTarget.current, {
       strings: ["Intelligence.", "Systems.", "Products.", "Solutions."],
       typeSpeed: 60,
@@ -51,7 +54,9 @@ export function Hero() {
 
           <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight mb-6">
             We Build <br />
-            <span className="text-brand italic font-serif" ref={typeTarget}></span>
+            <span className="text-brand italic font-serif" ref={typeTarget}>
+              Intelligence.
+            </span>
             <br />
             for Africa's Future.
           </h1>

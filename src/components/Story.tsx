@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { cn } from "../lib/utils";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { prefersReducedMotion } from "../lib/motion";
 import {
   Monitor,
   GraduationCap,
@@ -88,6 +89,8 @@ export function Story() {
   const lineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     let ctx = gsap.context(() => {
       // Line drawing animation
       gsap.fromTo(

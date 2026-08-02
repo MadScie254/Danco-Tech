@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Brain, Rocket, Shield } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { prefersReducedMotion } from "../lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -88,6 +89,8 @@ export function Services() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     let ctx = gsap.context(() => {
       gsap.fromTo(
         ".service-card",

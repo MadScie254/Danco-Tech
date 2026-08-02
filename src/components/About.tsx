@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { prefersReducedMotion } from "../lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -47,6 +48,8 @@ export function About() {
   const photoCandidates = [PROFILE_PHOTO_JPG, PROFILE_PHOTO_FALLBACK];
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     let ctx = gsap.context(() => {
       gsap.fromTo(
         ".skill-row",

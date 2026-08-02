@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Github, Star, GitFork, ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { prefersReducedMotion } from "../lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -70,6 +71,8 @@ export function GithubProjects() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     let ctx = gsap.context(() => {
       gsap.fromTo(
         ".github-card",
