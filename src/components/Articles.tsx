@@ -220,7 +220,7 @@ export function Articles() {
           </div>
           <div className="flex gap-4">
             <a
-              href="https://www.linkedin.com/in/daniel-wanjala-msc-912b8b17b/recent-activity/articles/"
+              href="https://www.linkedin.com/in/daniel-wanjala-machimbo-msc-912b8b17b/recent-activity/articles/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm font-mono text-light/50 hover:text-light transition-colors"
@@ -283,7 +283,7 @@ export function Articles() {
           <p className="text-light/50 font-mono text-sm">
             More articles coming soon — follow on{" "}
             <a
-              href="https://www.linkedin.com/in/daniel-wanjala-msc-912b8b17b/"
+              href="https://www.linkedin.com/in/daniel-wanjala-machimbo-msc-912b8b17b"
               target="_blank"
               rel="noopener noreferrer"
               className="text-brand hover:underline"

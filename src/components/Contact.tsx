@@ -318,7 +318,7 @@ export function Contact() {
                   <Github className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://linkedin.com/in/daniel-wanjala-msc-912b8b17b/"
+                  href="https://www.linkedin.com/in/daniel-wanjala-machimbo-msc-912b8b17b"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn profile"
