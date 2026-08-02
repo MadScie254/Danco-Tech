@@ -48,16 +48,16 @@ test.describe('E2E Verification', () => {
     await page.goto(url);
 
     // Fill form
-    await page.getByPlaceholder('John Doe').fill('Playwright Test');
-    await page.getByPlaceholder('john@company.com').fill('test@playwright.dev');
-    await page.getByPlaceholder('Tell us about your project...').fill('This is a test message from Playwright E2E.');
+    await page.getByLabel('Name').fill('Playwright Test');
+    await page.getByLabel('Email').fill('test@playwright.dev');
+    await page.getByLabel('Message').fill('This is a test message from Playwright E2E.');
     
     // Submit
     const submitBtn = await page.getByRole('button', { name: /Send Message/i });
     await submitBtn.click();
 
-    // Verify success toast (assuming sonner or similar creates a success message)
-    const successToast = await page.getByText('Message sent successfully!');
+    // Verify success toast (sonner)
+    const successToast = await page.getByText(/Message sent/i);
     await expect(successToast).toBeVisible();
 
     // Verify no navigation happened (still on same page)
