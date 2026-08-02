@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Toaster } from "sonner";
 import { SmoothScroll } from "./components/SmoothScroll";
 import { CommandMenu } from "./components/CommandMenu";
@@ -73,6 +73,34 @@ const Footer = React.lazy(() =>
 );
 
 export default function App() {
+  const [isInsightsPage, setIsInsightsPage] = useState(
+    () => window.location.hash === "#insights",
+  );
+
+  useEffect(() => {
+    const onHashChange = () => {
+      setIsInsightsPage(window.location.hash === "#insights");
+      if (window.location.hash === "#insights") {
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+    };
+
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  const openInsights = () => {
+    window.location.hash = "#insights";
+  };
+
+  const openHome = () => {
+    if (window.location.hash) {
+      history.pushState("", document.title, window.location.pathname + window.location.search);
+      setIsInsightsPage(false);
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+  };
+
   return (
     <div className="relative">
       <SmoothScroll />
@@ -89,25 +117,72 @@ export default function App() {
       <Nav />
 
       <main id="main-content">
-        <Hero />
-        <Suspense fallback={<div className="min-h-[20vh]" />}>
-          <LogosBanner />
-          <Story />
-          <About />
-          <CaseStudies />
-          <Process />
-          <Services />
-          <AnalyticsShowcase />
-          <Products />
-          <GithubProjects />
-          <Speaking />
-          <Awards />
-          <Research />
-          <Articles />
-          <Testimonials />
-          <Contact />
-          <Footer />
-        </Suspense>
+        {isInsightsPage ? (
+          <Suspense fallback={<div className="min-h-[20vh]" />}>
+            <section className="pt-32 pb-10 border-b border-light/5 bg-surface/20">
+              <div className="max-w-7xl mx-auto px-6 md:px-12">
+                <div className="text-brand font-mono text-sm tracking-widest uppercase mb-4">
+                  Insights Hub
+                </div>
+                <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
+                  Writing & Speaking
+                </h1>
+                <p className="text-light/70 max-w-2xl mb-6">
+                  Research notes, long-form writing, and talks from Danco Analytics.
+                </p>
+                <button
+                  type="button"
+                  onClick={openHome}
+                  className="inline-flex items-center gap-2 rounded border border-light/20 bg-primary/50 px-4 py-2 text-sm font-mono text-light/80 hover:border-brand/40 hover:text-brand transition-colors"
+                >
+                  Back to Homepage
+                </button>
+              </div>
+            </section>
+            <Speaking />
+            <Research />
+            <Articles />
+            <Footer />
+          </Suspense>
+        ) : (
+          <>
+            <Hero />
+            <Suspense fallback={<div className="min-h-[20vh]" />}>
+              <LogosBanner />
+              <Story />
+              <About />
+              <CaseStudies />
+              <Process />
+              <Services />
+              <AnalyticsShowcase />
+              <Products />
+              <GithubProjects />
+              <section className="py-10 border-t border-b border-light/5 bg-surface/20">
+                <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                  <div>
+                    <div className="text-brand font-mono text-xs tracking-widest uppercase mb-2">
+                      Writing & Speaking
+                    </div>
+                    <p className="text-light/70">
+                      Explore research, articles, and talks in one place.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={openInsights}
+                    className="inline-flex items-center gap-2 rounded border border-light/20 bg-primary/50 px-5 py-2.5 text-sm font-mono text-light/80 hover:border-brand/40 hover:text-brand transition-colors"
+                  >
+                    Open Insights Hub
+                  </button>
+                </div>
+              </section>
+              <Awards />
+              <Testimonials />
+              <Contact />
+              <Footer />
+            </Suspense>
+          </>
+        )}
       </main>
 
       <CookieConsent />

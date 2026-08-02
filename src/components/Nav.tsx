@@ -21,6 +21,7 @@ const getSectionId = (link: string) => {
   if (normalized === "home") return "hero";
   if (normalized === "about") return "about-founder";
   if (normalized === "case studies") return "case-studies";
+  if (normalized === "research") return "insights";
   return normalized;
 };
 
@@ -76,7 +77,26 @@ export function Nav() {
 
   const scrollTo = (id: string) => {
     setMobileMenuOpen(false);
-    const el = document.getElementById(getSectionId(id));
+    const sectionId = getSectionId(id);
+    if (sectionId === "insights") {
+      window.location.hash = "#insights";
+      return;
+    }
+
+    if (window.location.hash === "#insights") {
+      window.location.hash = "#home";
+      window.setTimeout(() => {
+        const target = document.getElementById(sectionId);
+        if (target) {
+          target.scrollIntoView({
+            behavior: prefersReducedMotion() ? "auto" : "smooth",
+          });
+        }
+      }, 0);
+      return;
+    }
+
+    const el = document.getElementById(sectionId);
     if (el) {
       el.scrollIntoView({
         behavior: prefersReducedMotion() ? "auto" : "smooth",

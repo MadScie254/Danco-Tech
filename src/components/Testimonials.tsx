@@ -11,24 +11,32 @@ const TESTIMONIALS = [
       "Daniel built our entire patient records management system from scratch. It went live in 6 weeks and has been running without failure for 8 months. He understood our constraints — limited bandwidth, frequent power outages. He built for Kenya, not for Silicon Valley.",
     author: "Wekesa Simiyu",
     org: "County Hospital, Western Kenya",
+    photoUrl: undefined,
+    linkedIn: undefined,
   },
   {
     quote:
       "The GDP forecasting model Daniel delivered gave our research team a 12-month lead on macroeconomic trend signals. Technically excellent, and he explained the methodology so we could trust the outputs.",
     author: "Amina Nafula",
     org: "East African Policy Institute",
+    photoUrl: undefined,
+    linkedIn: undefined,
   },
   {
     quote:
       "Finally, a tech partner who doesn't need me to explain why M-Pesa matters. NyumbaIQ has transformed how we manage our 40-unit portfolio.",
     author: "Kamau Njoroge",
     org: "Nairobi",
+    photoUrl: undefined,
+    linkedIn: undefined,
   },
   {
     quote:
       "His expertise in Machine Learning is exceptional. He was able to take our messy agricultural datasets and turn them into a clear, performant computer vision model.",
     author: "Lead Agronomist",
     org: "AgriTech NGO",
+    photoUrl: undefined,
+    linkedIn: undefined,
   },
 ];
 
@@ -98,8 +106,44 @@ export function Testimonials() {
                 </blockquote>
 
                 <div className="mt-auto">
-                  <div className="font-semibold text-light">{t.author}</div>
-                  <div className="text-sm font-mono text-light/50">{t.org}</div>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      {t.linkedIn && (
+                        t.photoUrl ? (
+                          <img
+                            src={t.photoUrl}
+                            alt={`${t.author} profile`}
+                            className="w-8 h-8 rounded-full object-cover border border-light/20"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : (
+                          <div className="w-8 h-8 rounded-full border border-light/20 bg-light/5 flex items-center justify-center text-[10px] font-mono text-light/70">
+                            {t.author
+                              .split(" ")
+                              .map((part) => part[0])
+                              .join("")
+                              .slice(0, 2)
+                              .toUpperCase()}
+                          </div>
+                        )
+                      )}
+                      <div>
+                        <div className="font-semibold text-light">{t.author}</div>
+                        <div className="text-sm font-mono text-light/50">{t.org}</div>
+                      </div>
+                    </div>
+                    {t.linkedIn && (
+                      <a
+                        href={t.linkedIn}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs font-mono text-brand hover:text-brand/80 transition-colors"
+                      >
+                        View on LinkedIn
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </SwiperSlide>
