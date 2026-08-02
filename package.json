@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.37.3",
+    "@playwright/test": "^1.62.1",
     "@types/node": "^22.14.0",
     "autoprefixer": "^10.4.21",
     "esbuild": "^0.25.0",
