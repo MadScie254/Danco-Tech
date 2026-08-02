@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { cn } from "../lib/utils";
 import { BarChart3, Menu, X, ArrowRight, Sun, Moon } from "lucide-react";
-import { prefersReducedMotion } from "../lib/motion";
+import { Drawer } from "vaul";
+import { useTheme } from "next-themes";
+import { REDUCED_MOTION_QUERY, prefersReducedMotion } from "../lib/motion";
 
 const LINKS = [
   "Home",
@@ -26,16 +28,21 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("Home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [theme, setTheme] = useState("dark");
+  const [reduceMotion, setReduceMotion] = useState(() => prefersReducedMotion());
+  const { theme, setTheme } = useTheme();
+  const currentTheme = theme ?? "dark";
 
   useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "light") {
-      root.setAttribute("data-theme", "light");
-    } else {
-      root.removeAttribute("data-theme");
-    }
-  }, [theme]);
+    const mediaQuery = window.matchMedia(REDUCED_MOTION_QUERY);
+    setReduceMotion(mediaQuery.matches);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setReduceMotion(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
 
   useEffect(() => {
     let animationFrame = 0;
@@ -138,12 +145,12 @@ export function Nav() {
               <span>Menu</span>
             </button>
             <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
               className="p-2 text-light/70 hover:text-light transition-colors"
               aria-label="Toggle theme"
-              aria-pressed={theme === "light"}
+              aria-pressed={currentTheme === "light"}
             >
-              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {currentTheme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
             <button
               onClick={() => scrollTo("contact")}
@@ -153,61 +160,67 @@ export function Nav() {
             </button>
           </div>
 
-          <button
-            className="lg:hidden text-light p-2"
-            onClick={() => setMobileMenuOpen(true)}
-            aria-label="Open navigation menu"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
+          <Drawer.Root open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <Drawer.Trigger asChild>
+              <button
+                className="lg:hidden text-light p-2"
+                aria-label="Open navigation menu"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
+            </Drawer.Trigger>
+            <Drawer.Portal>
+              <Drawer.Overlay className="fixed inset-0 z-[60] bg-primary/80" />
+              <Drawer.Content
+                className={cn(
+                  "fixed inset-x-0 bottom-0 z-[60] bg-primary border-t border-light/10 rounded-t-2xl px-6 pt-4 pb-8",
+                  reduceMotion ? "transition-none" : "transition-transform duration-300",
+                )}
+              >
+                <div className="mx-auto mb-6 h-1.5 w-12 rounded-full bg-light/20" />
+                <div className="flex justify-end mb-4">
+                  <Drawer.Close asChild>
+                    <button
+                      className="text-light p-2"
+                      aria-label="Close navigation menu"
+                    >
+                      <X className="w-8 h-8" />
+                    </button>
+                  </Drawer.Close>
+                </div>
+
+                <div className="flex flex-col items-center gap-6 text-2xl font-display">
+                  <button
+                    onClick={() => {
+                      setTheme(currentTheme === "dark" ? "light" : "dark");
+                      setMobileMenuOpen(false);
+                    }}
+                    className="flex items-center gap-2 text-light/80 hover:text-brand transition-colors"
+                  >
+                    {currentTheme === "dark" ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+                    Switch Theme
+                  </button>
+                  {LINKS.map((link) => (
+                    <button
+                      key={link}
+                      onClick={() => scrollTo(link)}
+                      className="text-light/80 hover:text-brand transition-colors"
+                    >
+                      {link}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => scrollTo("contact")}
+                    className="mt-4 bg-sunset text-light px-8 py-4 rounded font-sans text-lg flex items-center gap-2"
+                  >
+                    Hire Us <ArrowRight className="w-5 h-5" />
+                  </button>
+                </div>
+              </Drawer.Content>
+            </Drawer.Portal>
+          </Drawer.Root>
         </div>
       </nav>
-
-      {/* Mobile Menu */}
-      <div
-        className={cn(
-          "fixed inset-0 bg-primary z-[60] flex flex-col justify-center items-center transition-all duration-500",
-          mobileMenuOpen
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none",
-        )}
-      >
-        <button
-          className="absolute top-6 right-6 lg:right-12 text-light p-2"
-          onClick={() => setMobileMenuOpen(false)}
-          aria-label="Close navigation menu"
-        >
-          <X className="w-8 h-8" />
-        </button>
-
-        <div className="flex flex-col items-center gap-6 text-2xl font-display">
-          <button
-            onClick={() => {
-              setTheme(theme === 'dark' ? 'light' : 'dark');
-              setMobileMenuOpen(false);
-            }}
-            className="flex items-center gap-2 text-light/80 hover:text-brand transition-colors"
-          >
-            {theme === 'dark' ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
-            Switch Theme
-          </button>
-          {LINKS.map((link) => (
-            <button
-              key={link}
-              onClick={() => scrollTo(link)}
-              className="text-light/80 hover:text-brand transition-colors"
-            >
-              {link}
-            </button>
-          ))}
-          <button
-            onClick={() => scrollTo("contact")}
-            className="mt-4 bg-sunset text-light px-8 py-4 rounded font-sans text-lg flex items-center gap-2"
-          >
-            Hire Us <ArrowRight className="w-5 h-5" />
-          </button>
-        </div>
-      </div>
     </>
   );
 }

@@ -8,8 +8,71 @@ import {
   Github,
   Linkedin,
 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Name is required"),
+  email: z.email("Enter a valid email address"),
+  company: z.string().trim().optional(),
+  project_type: z.string().trim().optional(),
+  message: z.string().trim().min(1, "Message is required"),
+  company_website: z.string().optional(),
+});
+
+type ContactFormValues = z.infer<typeof contactSchema>;
 
 export function Contact() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      company: "",
+      project_type: "AI/ML Model",
+      message: "",
+      company_website: "",
+    },
+  });
+
+  const onSubmit = async (values: ContactFormValues) => {
+    const payload = {
+      name: values.name,
+      email: values.email,
+      company: values.company || undefined,
+      project_type: values.project_type || undefined,
+      message: values.message,
+      company_website: values.company_website || undefined,
+    };
+
+    try {
+      const response = await fetch("https://formspree.io/f/xgoqkdjg", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Submission failed");
+      }
+
+      reset();
+      toast.success("Message sent — I'll reply within a day or two");
+    } catch {
+      toast.error("Couldn't send your message. Please try again.");
+    }
+  };
+
   return (
     <section
       id="contact"
@@ -39,8 +102,7 @@ export function Contact() {
           {/* Form */}
           <div>
             <form
-              action="https://formspree.io/f/xgoqkdjg"
-              method="POST"
+              onSubmit={handleSubmit(onSubmit)}
               className="space-y-6"
             >
               <input
@@ -50,6 +112,7 @@ export function Contact() {
                 autoComplete="off"
                 className="hidden"
                 aria-hidden="true"
+                {...register("company_website")}
               />
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
@@ -62,10 +125,14 @@ export function Contact() {
                   <input
                     type="text"
                     id="name"
-                    name="name"
+                    {...register("name")}
                     className="w-full bg-surface/50 border border-light/10 rounded-md px-4 py-3 text-light focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
+                    aria-invalid={Boolean(errors.name)}
                     required
                   />
+                  {errors.name && (
+                    <p className="text-xs text-red-400 font-mono">{errors.name.message}</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <label
@@ -77,10 +144,14 @@ export function Contact() {
                   <input
                     type="email"
                     id="email"
-                    name="email"
+                    {...register("email")}
                     className="w-full bg-surface/50 border border-light/10 rounded-md px-4 py-3 text-light focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
+                    aria-invalid={Boolean(errors.email)}
                     required
                   />
+                  {errors.email && (
+                    <p className="text-xs text-red-400 font-mono">{errors.email.message}</p>
+                  )}
                 </div>
               </div>
 
@@ -94,7 +165,7 @@ export function Contact() {
                 <input
                   type="text"
                   id="company"
-                  name="company"
+                  {...register("company")}
                   className="w-full bg-surface/50 border border-light/10 rounded-md px-4 py-3 text-light focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors"
                 />
               </div>
@@ -108,7 +179,7 @@ export function Contact() {
                 </label>
                 <select
                   id="project_type"
-                  name="project_type"
+                  {...register("project_type")}
                   className="w-full bg-surface/50 border border-light/10 rounded-md px-4 py-3 text-light focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors appearance-none"
                 >
                   <option className="bg-primary text-light">AI/ML Model</option>
@@ -134,18 +205,23 @@ export function Contact() {
                 </label>
                 <textarea
                   id="message"
-                  name="message"
+                  {...register("message")}
                   rows={5}
                   className="w-full bg-surface/50 border border-light/10 rounded-md px-4 py-3 text-light focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors resize-none"
+                  aria-invalid={Boolean(errors.message)}
                   required
                 ></textarea>
+                {errors.message && (
+                  <p className="text-xs text-red-400 font-mono">{errors.message.message}</p>
+                )}
               </div>
 
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className="relative group w-full md:w-auto overflow-hidden bg-sunset hover:bg-sunset/90 text-light px-8 py-4 rounded font-sans text-lg flex items-center justify-center gap-2 transition-colors interactive"
               >
-                <span className="relative z-10 font-bold">Send Message</span>
+                <span className="relative z-10 font-bold">{isSubmitting ? "Sending..." : "Send Message"}</span>
                 <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
                 <div className="absolute inset-0 bg-white/20 animate-[pulse_4s_cubic-bezier(0.4,0,0.6,1)_infinite] pointer-events-none"></div>
               </button>

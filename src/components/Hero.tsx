@@ -33,15 +33,6 @@ export function Hero() {
       {/* Particle Background Container */}
       <ParticlesBackground />
 
-      {/* Topographic Background Overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.04]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='topo' width='100' height='100' patternUnits='userSpaceOnUse'%3E%3Cpath d='M0 50 Q 25 30 50 50 T 100 50' fill='none' stroke='%23C8A96E' stroke-width='1'/%3E%3Cpath d='M0 70 Q 25 50 50 70 T 100 70' fill='none' stroke='%231D9E75' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23topo)'/%3E%3C/svg%3E")`,
-          backgroundSize: "cover",
-        }}
-      />
-
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10 grid lg:grid-cols-12 gap-12 items-center">
         {/* Left Column */}
         <div className="lg:col-span-7 flex flex-col items-start pt-10 lg:pt-0">
@@ -121,12 +112,15 @@ export function Hero() {
 
             <div className="flex justify-between items-center mb-6 pb-4 border-b border-light/10">
               <div className="flex items-center gap-2 text-xs font-mono text-light/50">
-                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                LIVE
+                <span className="w-2 h-2 rounded-full bg-brand animate-pulse" />
+                DEMO
                 <span className="px-2">·</span>
-                Danco Analytics System Monitor
+                System Snapshot Panel
               </div>
               <Activity className="w-4 h-4 text-brand" />
+            </div>
+            <div className="text-[11px] font-mono text-light/50 mb-4">
+              Illustrative system snapshot (sample values)
             </div>
 
             <div className="space-y-6">
@@ -171,19 +165,6 @@ export function Hero() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Data ticker */}
-      <div className="absolute bottom-0 left-0 w-full bg-brand/5 border-t border-brand/20 py-2 overflow-hidden flex whitespace-nowrap">
-        <div className="animate-[ticker_30s_linear_infinite] inline-flex font-mono text-xs text-brand/80">
-          {[...Array(4)].map((_, i) => (
-            <span key={i} className="mx-4">
-              Python · XGBoost · React · Django · TensorFlow · PostgreSQL ·
-              M-Pesa API · Supabase · ROS2 · Computer Vision · SMOTE ·
-              RandomForest · FastAPI · Docker ·
-            </span>
-          ))}
         </div>
       </div>
 

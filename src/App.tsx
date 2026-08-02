@@ -4,6 +4,7 @@
  */
 
 import React, { Suspense } from "react";
+import { Toaster } from "sonner";
 import { SmoothScroll } from "./components/SmoothScroll";
 import { CommandMenu } from "./components/CommandMenu";
 import { Nav } from "./components/Nav";
@@ -110,6 +111,7 @@ export default function App() {
       </main>
 
       <CookieConsent />
+      <Toaster richColors position="top-right" />
     </div>
   );
 }

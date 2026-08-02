@@ -1,16 +1,18 @@
 import React from "react";
-import { ArrowUpRight, TrendingUp, Clock, ShieldCheck } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const BASE_URL = import.meta.env.BASE_URL ?? "/";
 const CASE_STUDIES = [
   {
     title: "Smart Grid Theft Detection",
-    summary:
-      "Reduced non-technical loss detection latency by deploying an ensemble model and automated triage pipeline for utility teams.",
-    metric: "94.2%",
-    metricLabel: "Model accuracy",
-    impact: "3x faster investigation cycles",
-    timeline: "12 weeks",
+    problem:
+      "Utility teams faced delayed non-technical loss detection and manual triage cycles that slowed response time.",
+    approach:
+      "Deployed an ensemble model with automated triage workflows to flag high-risk cases for investigation.",
+    result:
+      "Investigation cycles became faster and incident prioritization more consistent across teams.",
+    // TODO: Replace with a verified KPI and citation from client delivery records.
+    proof: "TODO: Add verified model accuracy and investigation cycle reduction.",
     stack: ["XGBoost", "SMOTE+ENN", "FastAPI", "PostgreSQL"],
     image: {
       avif: `${BASE_URL}assets/case-studies/smart-grid.avif`,
@@ -21,12 +23,14 @@ const CASE_STUDIES = [
   },
   {
     title: "Real Estate Automation Suite",
-    summary:
-      "Built a multi-tenant SaaS platform for rent collection, tenant onboarding, and financial reporting with M-Pesa integration.",
-    metric: "20%",
-    metricLabel: "Collection lift",
-    impact: "60% less manual reporting",
-    timeline: "10 weeks",
+    problem:
+      "Property managers were operating fragmented workflows for collections, onboarding, and reporting.",
+    approach:
+      "Built a multi-tenant SaaS platform with M-Pesa integration and centralized operational dashboards.",
+    result:
+      "Teams reduced manual operational overhead and improved day-to-day visibility across portfolios.",
+    // TODO: Replace with validated rent-collection and reporting efficiency metrics.
+    proof: "TODO: Add verified collection lift and manual reporting reduction figures.",
     stack: ["React", "Supabase", "M-Pesa", "Recharts"],
     image: {
       avif: `${BASE_URL}assets/case-studies/real-estate.avif`,
@@ -37,12 +41,14 @@ const CASE_STUDIES = [
   },
   {
     title: "Hospital IT Automation",
-    summary:
-      "Delivered uptime-focused automation workflows for hospital reporting, inventory, and compliance across multiple facilities.",
-    metric: "60%",
-    metricLabel: "Process time saved",
-    impact: "99.9% reporting availability",
-    timeline: "8 weeks",
+    problem:
+      "Hospital reporting, inventory, and compliance workflows were heavily manual and vulnerable to downtime.",
+    approach:
+      "Implemented automation workflows and reliability-first operations support across facility systems.",
+    result:
+      "Operations became more predictable, with reduced manual effort in critical reporting and compliance tasks.",
+    // TODO: Add verified process-time savings and reporting availability evidence.
+    proof: "TODO: Add validated uptime and time-saved metrics from operations logs.",
     stack: ["Python", "Power BI", "Linux", "CI/CD"],
     image: {
       avif: `${BASE_URL}assets/case-studies/health-it.avif`,
@@ -104,39 +110,40 @@ export function CaseStudies() {
                   <h3 className="font-display text-2xl font-bold mb-3">
                     {study.title}
                   </h3>
-                  <p className="text-sm text-light/70 leading-relaxed">
-                    {study.summary}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 text-xs font-mono text-light/60">
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-brand" />
-                    <div>
-                      <div className="text-light/40">{study.metricLabel}</div>
-                      <div className="text-light font-semibold">
-                        {study.metric}
-                      </div>
+                    <div className="space-y-4">
+                      <section>
+                        <h4 className="text-xs font-mono uppercase tracking-widest text-light/40 mb-2 border-b border-light/10 pb-2">
+                          01. The Problem
+                        </h4>
+                        <p className="text-sm text-light/70 leading-relaxed">
+                          {study.problem}
+                        </p>
+                      </section>
+                      <section>
+                        <h4 className="text-xs font-mono uppercase tracking-widest text-brand mb-2 border-b border-light/10 pb-2">
+                          02. Approach
+                        </h4>
+                        <p className="text-sm text-light/70 leading-relaxed">
+                          {study.approach}
+                        </p>
+                      </section>
+                      <section>
+                        <h4 className="text-xs font-mono uppercase tracking-widest text-[#A6CE39] mb-2 border-b border-light/10 pb-2">
+                          03. Result
+                        </h4>
+                        <p className="text-sm text-light/70 leading-relaxed">
+                          {study.result}
+                        </p>
+                      </section>
+                      <section>
+                        <h4 className="text-xs font-mono uppercase tracking-widest text-light/40 mb-2 border-b border-light/10 pb-2">
+                          04. Proof
+                        </h4>
+                        <p className="text-sm text-light/70 leading-relaxed">
+                          {study.proof}
+                        </p>
+                      </section>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-brand" />
-                    <div>
-                      <div className="text-light/40">Impact</div>
-                      <div className="text-light font-semibold">
-                        {study.impact}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-brand" />
-                    <div>
-                      <div className="text-light/40">Timeline</div>
-                      <div className="text-light font-semibold">
-                        {study.timeline}
-                      </div>
-                    </div>
-                  </div>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
