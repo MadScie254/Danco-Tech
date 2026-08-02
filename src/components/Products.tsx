@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, X } from "lucide-react";
+import * as Dialog from "@radix-ui/react-dialog";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prefersReducedMotion } from "../lib/motion";
@@ -15,7 +16,7 @@ const PRODUCTS = [
     status: "Live",
     statusColor: "text-green-400 bg-green-400/10 border-green-400/20",
     stack: ["React", "Supabase", "M-Pesa API", "Anthropic API"],
-    link: "https://github.com/MadScie254",
+    link: undefined,
     bgLight: "#C5A059",
     details: {
       problem: "Landlords in Kenya face massive friction in rent collection, manual reconciliation via USSD menus, and poor visibility into tenant arrears.",
@@ -63,7 +64,7 @@ const PRODUCTS = [
     status: "Beta",
     statusColor: "text-amber-400 bg-amber-400/10 border-amber-400/20",
     stack: ["React", "Django", "PostgreSQL", "Anthropic API"],
-    link: "https://github.com/MadScie254",
+    link: undefined,
     bgLight: "#C5A059",
     details: {
       problem: "M-Pesa statements are long, dense PDF files. Kenyans had no way to visualize their money flow naturally without manual Excel entries.",
@@ -79,7 +80,7 @@ const PRODUCTS = [
     status: "In Dev",
     statusColor: "text-blue-400 bg-blue-400/10 border-blue-400/20",
     stack: ["React", "Django", "PostgreSQL", "GCP"],
-    link: "https://github.com/MadScie254",
+    link: undefined,
     bgLight: "#D4AF6E",
     details: {
       problem: "Hospital shift rosters were managed using physical whiteboards and WhatsApp groups, causing overlapping shifts, extreme burnout, and payroll disputes.",
@@ -95,7 +96,7 @@ const PRODUCTS = [
     status: "In Dev",
     statusColor: "text-blue-400 bg-blue-400/10 border-blue-400/20",
     stack: ["React", "Supabase", "M-Pesa API", "PostgreSQL"],
-    link: "https://github.com/MadScie254",
+    link: undefined,
     bgLight: "#E8CA8B",
     details: {
       problem: "Small businesses constantly face penalties from KRA compliance issues and rely on manual ETR machines.",
@@ -132,17 +133,15 @@ export function Products() {
     return () => ctx.revert();
   }, []);
 
-  useEffect(() => {
-    if (selectedProject) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => { document.body.style.overflow = ''; };
-  }, [selectedProject]);
-
   return (
-    <>
+    <Dialog.Root
+      open={Boolean(selectedProject)}
+      onOpenChange={(open) => {
+        if (!open) {
+          setSelectedProject(null);
+        }
+      }}
+    >
       <section id="projects" className="py-24 bg-surface/20 relative" ref={containerRef}>
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="mb-16">
@@ -159,10 +158,14 @@ export function Products() {
 
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
             {PRODUCTS.map((p, i) => (
-              <div
+              <Dialog.Trigger
                 key={i}
+                asChild
+              >
+                <button
+                type="button"
                 onClick={() => setSelectedProject(p)}
-                className="product-card cursor-pointer group relative bg-primary border border-light/10 rounded-xl overflow-hidden flex flex-col h-full transform-gpu transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-2xl hover:shadow-brand/5"
+                className="product-card cursor-pointer group relative bg-primary border border-light/10 rounded-xl overflow-hidden flex flex-col h-full transform-gpu transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-2xl hover:shadow-brand/5 text-left"
               >
                 {/* Image Placeholder area */}
                 <div className="h-48 relative overflow-hidden bg-surface/50 border-b border-light/5 flex items-center justify-center p-6">
@@ -210,7 +213,8 @@ export function Products() {
                     </div>
                   </div>
                 </div>
-              </div>
+                </button>
+              </Dialog.Trigger>
             ))}
           </div>
         </div>
@@ -218,11 +222,9 @@ export function Products() {
 
       {/* Modal / Slide-over */}
       {selectedProject && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6" style={{ perspective: "1000px" }}>
-          <div 
-            className="absolute inset-0 bg-primary/80 backdrop-blur-md"
-            onClick={() => setSelectedProject(null)}
-          />
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 z-[100] bg-primary/80 backdrop-blur-md" />
+          <Dialog.Content className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6" style={{ perspective: "1000px" }}>
           <div className="relative w-full max-w-4xl bg-surface border border-light/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-200">
             
             <div className="p-6 md:p-8 border-b border-light/10 flex justify-between items-start bg-primary/50">
@@ -239,12 +241,11 @@ export function Products() {
                   {selectedProject.tagline}
                 </p>
               </div>
-              <button 
-                onClick={() => setSelectedProject(null)}
-                className="p-2 hover:bg-light/10 rounded-full transition-colors text-light/50 hover:text-light"
-              >
-                <X className="w-6 h-6" />
-              </button>
+              <Dialog.Close asChild>
+                <button className="p-2 hover:bg-light/10 rounded-full transition-colors text-light/50 hover:text-light">
+                  <X className="w-6 h-6" />
+                </button>
+              </Dialog.Close>
             </div>
 
             <div className="p-6 md:p-8 overflow-y-auto">
@@ -285,6 +286,7 @@ export function Products() {
                     </div>
                   </div>
                   
+                  {selectedProject.link && (
                   <div>
                     <h4 className="text-xs font-mono uppercase tracking-widest text-light/40 mb-3">Repository</h4>
                     <a 
@@ -297,14 +299,16 @@ export function Products() {
                       View Source Code <ArrowUpRight className="w-4 h-4" />
                     </a>
                   </div>
+                  )}
                 </div>
 
               </div>
             </div>
           </div>
-        </div>
+          </Dialog.Content>
+        </Dialog.Portal>
       )}
-    </>
+    </Dialog.Root>
   );
 }
 
