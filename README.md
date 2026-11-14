@@ -40,16 +40,17 @@ VITE_GA4_ID=G-XXXXXXXXXX
 
 `VITE_GA4_ID` is optional and only used when analytics consent is accepted.
 
-### Cloudflare Pages Contact Form
+### Contact Form API
 
-This project uses a Cloudflare Pages Function to send contact form emails via MailChannels.
-Set the following environment variables in your Cloudflare Pages project:
+The site posts inquiries to `POST /api/contact`. The Worker (`src/worker.ts`) and Pages Function (`functions/api/contact.ts`) share the same intake pipeline in `src/lib/contact-intake.ts`.
 
-- `CONTACT_TO=dmwanjala254@gmail.com`
-- `CONTACT_FROM=no-reply@yourdomain.com`
+Set these secrets in the Cloudflare project (do not commit them):
+
+- `CONTACT_TO` — destination inbox
+- `CONTACT_FROM` — an address on a domain you control
 - `CONTACT_SUBJECT_PREFIX=Danco Analytics` (optional)
 
-`CONTACT_FROM` should be an address on a domain you control.
+Run unit tests with `npm test`.
 
 ### Assets
 

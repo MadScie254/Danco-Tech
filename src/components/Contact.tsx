@@ -47,13 +47,13 @@ export function Contact() {
       name: values.name,
       email: values.email,
       company: values.company || undefined,
-      project_type: values.project_type || undefined,
+      projectType: values.project_type || undefined,
       message: values.message,
       company_website: values.company_website || undefined,
     };
 
     try {
-      const response = await fetch("https://formspree.io/f/xgoqkdjg", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
