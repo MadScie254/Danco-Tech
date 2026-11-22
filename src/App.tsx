@@ -14,6 +14,7 @@ import { LoadingScreen } from "./components/LoadingScreen";
 import { CookieConsent } from "./components/CookieConsent";
 import {
   EMPTY_INSIGHT_FILTERS,
+  locationAfterInsightsExit,
   parseInsightFilters,
   withInsightFilters,
 } from "./lib/insights";
@@ -89,9 +90,19 @@ export default function App() {
 
   useEffect(() => {
     const onHashChange = () => {
-      setIsInsightsPage(window.location.hash === "#insights");
-      if (window.location.hash === "#insights") {
+      const insights = window.location.hash === "#insights";
+      setIsInsightsPage(insights);
+      if (insights) {
         window.scrollTo({ top: 0, behavior: "auto" });
+      }
+      const next = locationAfterInsightsExit(
+        window.location.pathname,
+        window.location.search,
+        window.location.hash,
+      );
+      const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      if (next !== current) {
+        history.replaceState(null, "", next);
       }
     };
 

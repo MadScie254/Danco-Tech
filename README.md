@@ -44,16 +44,6 @@ VITE_GA4_ID=G-XXXXXXXXXX
 
 The site posts inquiries to `POST /api/contact`. The Worker (`src/worker.ts`) and Pages Function (`functions/api/contact.ts`) share the same intake pipeline in `src/lib/contact-intake.ts`.
 
-### Insights search
-
-The Insights hub (`/#insights`) searches the shared catalog in `src/lib/insights-catalog.ts`. Filters are shareable on the query string and do not replace the `#insights` hash:
-
-- `q` — words matched across title, summary, tags, venue, date, place, and format
-- `kind` — `article`, `talk`, or `research`
-- `tag` — one normalized tag, such as `ml`
-
-With no filter, the hub keeps the speaking, research, and article sections. A filter replaces those sections with the ranked matches.
-
 Set these secrets in the Cloudflare project (do not commit them):
 
 - `CONTACT_TO` — destination inbox
@@ -61,6 +51,16 @@ Set these secrets in the Cloudflare project (do not commit them):
 - `CONTACT_SUBJECT_PREFIX=Danco Analytics` (optional)
 
 Run unit tests with `npm test`.
+
+### Insights search
+
+The Insights hub (`/#insights`) searches the shared catalog in `src/lib/insights-catalog.ts`. Filters are shareable on the query string and do not replace the `#insights` hash:
+
+- `q` — words matched across title, summary, tags, venue, date, place, and format. `q` is capped at 120 characters.
+- `kind` — `article`, `talk`, or `research`
+- `tag` — one normalized tag, such as `ml`
+
+With no filter, the hub keeps the speaking, research, and article sections. A filter replaces those sections with the ranked matches. Leaving the hub drops `q`, `kind`, and `tag`.
 
 ### Assets
 

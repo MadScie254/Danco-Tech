@@ -62,6 +62,13 @@ export function CommandMenu() {
                     window.location.hash = "#insights";
                     return;
                   }
+                  if (window.location.hash === "#insights") {
+                    window.location.hash = "#home";
+                    window.setTimeout(() => {
+                      document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
+                    }, 0);
+                    return;
+                  }
                   document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="flex items-center px-3 py-3 text-sm text-light/80 hover:bg-brand/10 hover:text-brand cursor-pointer rounded-lg transition-colors aria-selected:bg-brand/10 aria-selected:text-brand"

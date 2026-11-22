@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
   EMPTY_INSIGHT_FILTERS,
+  blockInPageInsightNavigation,
   hasActiveInsightFilters,
   insightResultLabel,
+  locationAfterInsightsExit,
   normalizeInsightTag,
   parseInsightFilters,
   searchInsights,
@@ -165,6 +167,12 @@ describe("visibleInsightTags", () => {
     expect(visible[0]).toEqual({ tag: "tag-13", count: 1 });
     expect(visible.slice(1).some((entry) => entry.tag === "tag-13")).toBe(false);
   });
+
+  it("keeps a selected tag visible when the current facets no longer include it", () => {
+    const visible = visibleInsightTags([{ tag: "agriculture", count: 1 }], "frappe", 12);
+    expect(visible[0]).toEqual({ tag: "frappe", count: 0 });
+    expect(visible.some((entry) => entry.tag === "agriculture")).toBe(true);
+  });
 });
 
 describe("insight query string", () => {
@@ -204,6 +212,29 @@ describe("insight query string", () => {
     expect(toggleInsightTag(filters({ text: "kenya" }), " AI ")).toEqual(
       filters({ text: "kenya", tag: "ai" }),
     );
+  });
+});
+
+describe("locationAfterInsightsExit", () => {
+  it("keeps a filtered insights URL and strips filters when the hash leaves the hub", () => {
+    expect(locationAfterInsightsExit("/", "?q=frappe&kind=talk", "#insights")).toBe(
+      "/?q=frappe&kind=talk#insights",
+    );
+    expect(locationAfterInsightsExit("/", "?q=frappe&kind=talk&tag=ml", "#home")).toBe("/#home");
+    expect(locationAfterInsightsExit("/work", "?utm=1&q=kenya", "#contact")).toBe(
+      "/work?utm=1#contact",
+    );
+  });
+});
+
+describe("blockInPageInsightNavigation", () => {
+  it("cancels hash-only links and lets external articles open", () => {
+    let prevented = 0;
+    const event = { preventDefault: () => { prevented += 1; } };
+    blockInPageInsightNavigation("#", event);
+    expect(prevented).toBe(1);
+    blockInPageInsightNavigation("https://example.com/frappe", event);
+    expect(prevented).toBe(1);
   });
 });
 

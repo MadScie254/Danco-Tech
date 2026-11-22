@@ -4,6 +4,8 @@ import { INSIGHTS } from "../lib/insights-catalog";
 import {
   EMPTY_INSIGHT_FILTERS,
   INSIGHT_KIND_OPTIONS,
+  MAX_INSIGHT_QUERY_LENGTH,
+  blockInPageInsightNavigation,
   hasActiveInsightFilters,
   insightResultLabel,
   normalizeInsightTag,
@@ -77,18 +79,20 @@ export function InsightsBrowser({
           <label htmlFor="insight-search" className="sr-only">
             Search titles, topics, and tags
           </label>
-          <div className="flex items-center gap-3 border border-light/10 bg-surface/40 rounded-xl px-4">
+          <div className="flex items-center gap-3 border border-light/10 bg-surface/40 rounded-xl px-4 focus-within:border-brand">
             <Search className="w-4 h-4 text-light/40 shrink-0" aria-hidden="true" />
             <input
               id="insight-search"
               name="q"
               type="search"
               value={filters.text}
+              maxLength={MAX_INSIGHT_QUERY_LENGTH}
               placeholder="Search titles, topics, and tags"
               autoComplete="off"
-              onChange={(event) =>
-                setFilters((current) => ({ ...current, text: event.target.value }))
-              }
+              onChange={(event) => {
+                const text = event.target.value.slice(0, MAX_INSIGHT_QUERY_LENGTH);
+                setFilters((current) => ({ ...current, text }));
+              }}
               className="w-full bg-transparent py-4 text-light outline-none placeholder:text-light/40"
             />
           </div>
@@ -145,11 +149,11 @@ export function InsightsBrowser({
           )}
         </div>
 
-        <div className="flex items-center justify-between gap-4 mb-8">
-          <p aria-live="polite" className="text-sm font-mono text-light/50">
-            {insightResultLabel(search.total)}
-          </p>
-          {active && (
+        {active && (
+          <div className="flex items-center justify-between gap-4 mb-8">
+            <p aria-live="polite" className="text-sm font-mono text-light/50">
+              {insightResultLabel(search.total)}
+            </p>
             <button
               type="button"
               onClick={() => setFilters({ ...EMPTY_INSIGHT_FILTERS })}
@@ -158,8 +162,8 @@ export function InsightsBrowser({
               <X className="w-3.5 h-3.5" aria-hidden="true" />
               Clear filters
             </button>
-          )}
-        </div>
+          </div>
+        )}
 
         {active &&
           (search.results.length === 0 ? (
@@ -185,6 +189,7 @@ export function InsightsBrowser({
                       {...(external
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
+                      onClick={(event) => blockInPageInsightNavigation(item.href, event)}
                       className="font-display text-2xl font-bold hover:text-brand break-words"
                     >
                       {item.title}

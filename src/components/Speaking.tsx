@@ -1,6 +1,7 @@
 import React from "react";
 import { Mic, ArrowUpRight, Presentation } from "lucide-react";
 import { TALK_INSIGHTS } from "../lib/insights-catalog";
+import { blockInPageInsightNavigation } from "../lib/insights";
 
 export function Speaking() {
   return (
@@ -47,7 +48,11 @@ export function Speaking() {
               
               <div className="mt-auto pt-4 border-t border-light/10 flex justify-between items-center text-sm font-mono text-light/50">
                 <span>📍 {item.place}</span>
-                <a href={item.href} className="flex items-center gap-1 hover:text-light transition-colors group-hover:text-brand">
+                <a
+                  href={item.href}
+                  onClick={(event) => blockInPageInsightNavigation(item.href, event)}
+                  className="flex items-center gap-1 hover:text-light transition-colors group-hover:text-brand"
+                >
                   View Slides <ArrowUpRight className="w-3 h-3" />
                 </a>
               </div>

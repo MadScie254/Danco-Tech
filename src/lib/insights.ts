@@ -139,8 +139,23 @@ export function visibleInsightTags(
   const top = available.slice(0, limit);
   if (!selected || top.some((entry) => entry.tag === selected)) return [...top];
   const extra = available.find((entry) => entry.tag === selected);
-  if (!extra) return [...top];
-  return [extra, ...top];
+  return [extra ?? { tag: selected, count: 0 }, ...top];
+}
+
+export function locationAfterInsightsExit(
+  pathname: string,
+  search: string,
+  hash: string,
+): string {
+  if (hash === "#insights") return `${pathname}${search}${hash}`;
+  return `${withInsightFilters(`${pathname}${search}`, EMPTY_INSIGHT_FILTERS)}${hash}`;
+}
+
+export function blockInPageInsightNavigation(
+  href: string,
+  event: { preventDefault: () => void },
+): void {
+  if (!/^https?:\/\//.test(href)) event.preventDefault();
 }
 
 export function parseInsightFilters(params: URLSearchParams): InsightFilters {
