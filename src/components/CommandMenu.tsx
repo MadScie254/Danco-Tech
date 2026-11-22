@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Command } from "cmdk";
-import { Search, Monitor, Terminal, FileText, Mail, Github, ExternalLink } from "lucide-react";
+import { Search, Monitor, Terminal, FileText, Mail, Github, ExternalLink, Library } from "lucide-react";
 
 export function CommandMenu() {
   const [open, setOpen] = useState(false);
@@ -52,11 +52,16 @@ export function CommandMenu() {
               { id: "projects", label: "Projects Showcase", icon: <Terminal className="w-4 h-4 mr-3" /> },
               { id: "analytics", label: "Live Analytics", icon: <FileText className="w-4 h-4 mr-3" /> },
               { id: "contact", label: "Contact", icon: <Mail className="w-4 h-4 mr-3" /> },
+              { id: "insights", label: "Insights Hub", icon: <Library className="w-4 h-4 mr-3" /> },
             ].map(item => (
               <Command.Item
                 key={item.id}
                 onSelect={() => {
                   setOpen(false);
+                  if (item.id === "insights") {
+                    window.location.hash = "#insights";
+                    return;
+                  }
                   document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="flex items-center px-3 py-3 text-sm text-light/80 hover:bg-brand/10 hover:text-brand cursor-pointer rounded-lg transition-colors aria-selected:bg-brand/10 aria-selected:text-brand"
