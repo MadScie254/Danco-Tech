@@ -52,6 +52,16 @@ Set these secrets in the Cloudflare project (do not commit them):
 
 Run unit tests with `npm test`.
 
+### Insights search
+
+The Insights hub (`/#insights`) searches the shared catalog in `src/lib/insights-catalog.ts`. Filters are shareable on the query string and do not replace the `#insights` hash:
+
+- `q` — words matched across title, summary, tags, venue, date, place, and format. `q` is capped at 120 characters.
+- `kind` — `article`, `talk`, or `research`
+- `tag` — one normalized tag, such as `ml`
+
+With no filter, the hub keeps the speaking, research, and article sections. A filter replaces those sections with the ranked matches. Leaving the hub drops `q`, `kind`, and `tag`.
+
 ### Assets
 
 Add these files so the UI renders correctly:

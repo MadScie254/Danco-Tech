@@ -12,6 +12,12 @@ import { Hero } from "./components/Hero";
 import { MagneticCursor } from "./components/MagneticCursor";
 import { LoadingScreen } from "./components/LoadingScreen";
 import { CookieConsent } from "./components/CookieConsent";
+import {
+  EMPTY_INSIGHT_FILTERS,
+  locationAfterInsightsExit,
+  parseInsightFilters,
+  withInsightFilters,
+} from "./lib/insights";
 
 const LogosBanner = React.lazy(() =>
   import("./components/LogosBanner").then((m) => ({
@@ -71,6 +77,11 @@ const Contact = React.lazy(() =>
 const Footer = React.lazy(() =>
   import("./components/Footer").then((m) => ({ default: m.Footer })),
 );
+const InsightsBrowser = React.lazy(() =>
+  import("./components/InsightsBrowser").then((m) => ({
+    default: m.InsightsBrowser,
+  })),
+);
 
 export default function App() {
   const [isInsightsPage, setIsInsightsPage] = useState(
@@ -79,9 +90,19 @@ export default function App() {
 
   useEffect(() => {
     const onHashChange = () => {
-      setIsInsightsPage(window.location.hash === "#insights");
-      if (window.location.hash === "#insights") {
+      const insights = window.location.hash === "#insights";
+      setIsInsightsPage(insights);
+      if (insights) {
         window.scrollTo({ top: 0, behavior: "auto" });
+      }
+      const next = locationAfterInsightsExit(
+        window.location.pathname,
+        window.location.search,
+        window.location.hash,
+      );
+      const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      if (next !== current) {
+        history.replaceState(null, "", next);
       }
     };
 
@@ -94,8 +115,15 @@ export default function App() {
   };
 
   const openHome = () => {
-    if (window.location.hash) {
-      history.pushState("", document.title, window.location.pathname + window.location.search);
+    const next = withInsightFilters(
+      `${window.location.pathname}${window.location.search}`,
+      EMPTY_INSIGHT_FILTERS,
+    );
+    if (
+      window.location.hash ||
+      `${window.location.pathname}${window.location.search}` !== next
+    ) {
+      history.pushState("", document.title, next);
       setIsInsightsPage(false);
       window.scrollTo({ top: 0, behavior: "auto" });
     }
@@ -139,9 +167,16 @@ export default function App() {
                 </button>
               </div>
             </section>
-            <Speaking />
-            <Research />
-            <Articles />
+            <InsightsBrowser
+              syncUrl
+              initialFilters={parseInsightFilters(
+                new URLSearchParams(window.location.search),
+              )}
+            >
+              <Speaking />
+              <Research />
+              <Articles />
+            </InsightsBrowser>
             <Footer />
           </Suspense>
         ) : (

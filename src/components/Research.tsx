@@ -7,6 +7,7 @@ import {
   Zap,
   Binary,
 } from "lucide-react";
+import { RESEARCH_INSIGHT } from "../lib/insights-catalog";
 
 const TAGS = [
   "Economic Forecasting",
@@ -50,8 +51,7 @@ export function Research() {
             </div>
 
             <h3 className="font-display text-2xl md:text-3xl font-bold leading-tight max-w-2xl">
-              "Electricity Theft Detection Under Severe Class Imbalance Using
-              Hybrid Ensemble ML"
+              "{RESEARCH_INSIGHT.title}"
             </h3>
 
             <div className="flex flex-col gap-2 font-mono text-xs md:text-sm text-light/60 bg-surface/50 p-4 rounded border border-light/10 w-full">
@@ -83,13 +83,7 @@ export function Research() {
               <div>
                 <h4 className="text-sm font-mono text-brand mb-2">ABSTRACT:</h4>
                 <p className="text-sm text-light/70 leading-relaxed md:text-base">
-                  Electricity theft costs utilities billions globally and
-                  disproportionately impacts developing economies. This research
-                  develops a hybrid ensemble framework combining XGBoost with
-                  SMOTE+ENN resampling to detect non-technical losses from smart
-                  meter time-series data. Trained on the SGCC dataset (537 theft
-                  / 2,655 normal consumers), the model directly addresses Kenya
-                  Power's (KPLC) fraud detection challenge.
+                  {RESEARCH_INSIGHT.summary}
                 </p>
               </div>
 
